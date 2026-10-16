@@ -1,0 +1,40 @@
+{
+  "synthetic": true,
+  "http_status": 200,
+  "invalid_input_status": 422,
+  "latency_ms": [
+    2.117207972332835,
+    2.9590418562293053,
+    2.325375098735094
+  ],
+  "result": {
+    "execution_order": [
+      "data",
+      "filtered",
+      "total"
+    ],
+    "outputs": {
+      "data": [
+        {
+          "team": "A",
+          "value": 10
+        },
+        {
+          "team": "B",
+          "value": 20
+        }
+      ],
+      "filtered": [
+        {
+          "team": "B",
+          "value": 20
+        }
+      ],
+      "total": [
+        {
+          "sum": 20
+        }
+      ]
+    }
+  }
+}

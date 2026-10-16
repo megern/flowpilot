@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FlowPilot</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script type="module" src="/assets/app.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="eyebrow">FLOWPILOT · 0.2</div>
+      <h1>Shape tabular data with steps you can inspect and reuse.</h1>
+      <p>
+        Import CSV, choose types, add safe filtering, column selection and
+        aggregation. Preview every executed step.
+      </p>
+      <a href="/guide">User guide</a><a href="/docs">API documentation</a>
+    </header>
+    <main>
+      <div class="actions controls">
+        <button id="example">Load synthetic example</button
+        ><span id="data-origin" class="pill"
+          >Your input · no example loaded</span
+        >
+      </div>
+      <div id="status" role="status" aria-live="polite" class="status"></div>
+      <div class="layout">
+        <section class="panel input-panel">
+          <h2>1. Import source data</h2>
+          <label for="csv-file">CSV file</label
+          ><input id="csv-file" type="file" accept=".csv,text/csv" /><label
+            for="csv"
+            >Or paste comma-separated data</label
+          ><textarea
+            id="csv"
+            placeholder="team,value&#10;A,10&#10;B,20"
+          ></textarea
+          ><button id="preview">Preview and choose column types</button>
+          <div id="preview-data"></div>
+          <details open>
+            <summary>Column types</summary>
+            <div id="schema" class="row"></div>
+          </details>
+          <h2>2. Build steps</h2>
+          <p class="hint">
+            The builder makes a linear workflow: each step consumes the
+            preceding step. The API also supports DAGs and concatenation.
+          </p>
+          <div id="steps"></div>
+          <div class="actions">
+            <button id="add-filter">Add filter</button
+            ><button id="add-select">Select columns</button
+            ><button id="add-aggregate">Add aggregate</button>
+          </div>
+          <label for="config-file">Import a saved builder configuration</label
+          ><input
+            id="config-file"
+            type="file"
+            accept=".json,application/json"
+          />
+          <div class="actions">
+            <button id="run" class="primary">Run analysis</button
+            ><button id="export-config">Export configuration</button>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>Results and next actions</h2>
+          <p class="hint">
+            Interpret findings in context. None of these checks certifies
+            enterprise readiness or proves causal or automation outcomes.
+          </p>
+          <div id="results" aria-live="polite">
+            <p class="empty">
+              Load the clearly synthetic example or add your own input, then run
+              analysis.
+            </p>
+          </div>
+          <div class="actions">
+            <button id="export-report" disabled>Export report</button
+            ><button id="print" disabled>Print / save PDF</button>
+          </div>
+          <details>
+            <summary>Technical report</summary>
+            <pre id="technical">No analysis yet.</pre>
+          </details>
+        </section>
+      </div>
+      <footer>
+        Local, CPU-only analysis. No paid APIs or external resources. Imports
+        are sent to this server, held in memory and not saved by the
+        application. Exports can include your input data: keep them private
+        where appropriate.
+      </footer>
+    </main>
+  </body>
+</html>

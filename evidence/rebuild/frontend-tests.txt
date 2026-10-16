@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: CSV export neutralizes formula-like text without changing numeric negatives
+ok 1 - CSV export neutralizes formula-like text without changing numeric negatives
+  ---
+  duration_ms: 1.447334
+  ...
+# Subtest: builder only accepts supported declarative operations
+ok 2 - builder only accepts supported declarative operations
+  ---
+  duration_ms: 0.954792
+  ...
+# Subtest: validation errors show the input location and useful message
+ok 3 - validation errors show the input location and useful message
+  ---
+  duration_ms: 0.088458
+  ...
+# Subtest: a delayed result is rejected after input generation changes
+ok 4 - a delayed result is rejected after input generation changes
+  ---
+  duration_ms: 0.218042
+  ...
+# Subtest: pending work locks controls and restores them after failure without stale exports
+ok 5 - pending work locks controls and restores them after failure without stale exports
+  ---
+  duration_ms: 0.292792
+  ...
+# Subtest: non-200 API response becomes a validation failure
+ok 6 - non-200 API response becomes a validation failure
+  ---
+  duration_ms: 0.208416
+  ...
+# Subtest: actual configuration-import handler cannot overwrite edits after delayed file read
+ok 7 - actual configuration-import handler cannot overwrite edits after delayed file read
+  ---
+  duration_ms: 6.304875
+  ...
+# Subtest: actual preview handler discards delayed schema and mapping after an edit
+ok 8 - actual preview handler discards delayed schema and mapping after an edit
+  ---
+  duration_ms: 2.584834
+  ...
+# Subtest: actual synthetic-example completion cannot label edited input as synthetic
+ok 9 - actual synthetic-example completion cannot label edited input as synthetic
+  ---
+  duration_ms: 2.63225
+  ...
+# Subtest: actual CSV-file handler cannot overwrite edits after delayed text read
+ok 10 - actual CSV-file handler cannot overwrite edits after delayed text read
+  ---
+  duration_ms: 1.4475
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 120.788833
