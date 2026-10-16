@@ -1,0 +1,24 @@
+{
+  "csv_text": "team,value\nA,10\nB,20\nA,30",
+  "schema": {
+    "team": "string",
+    "value": "number"
+  },
+  "steps": [
+    {
+      "op": "filter",
+      "params": {
+        "field": "team",
+        "comparison": "eq",
+        "value": "A"
+      }
+    },
+    {
+      "op": "aggregate",
+      "params": {
+        "field": "value",
+        "operation": "sum"
+      }
+    }
+  ]
+}

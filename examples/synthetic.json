@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "id": "data",
+      "op": "source",
+      "params": {
+        "rows": [
+          {
+            "team": "A",
+            "value": 10
+          },
+          {
+            "team": "B",
+            "value": 20
+          }
+        ]
+      }
+    },
+    {
+      "id": "filtered",
+      "op": "filter",
+      "depends_on": [
+        "data"
+      ],
+      "params": {
+        "field": "value",
+        "comparison": "gt",
+        "value": 10
+      }
+    },
+    {
+      "id": "total",
+      "op": "aggregate",
+      "depends_on": [
+        "filtered"
+      ],
+      "params": {
+        "field": "value",
+        "operation": "sum"
+      }
+    }
+  ]
+}

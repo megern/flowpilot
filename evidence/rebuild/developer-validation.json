@@ -1,0 +1,36 @@
+{
+  "application": "flowpilot",
+  "version": "0.2.0",
+  "status": "TESTED",
+  "review_type": "developer verification, not independent QA",
+  "tests": {
+    "python_unit_and_integration": {
+      "passed": 27,
+      "evidence": "pytest.txt"
+    },
+    "frontend_logic": {
+      "passed": 10,
+      "evidence": "frontend-tests.txt"
+    },
+    "bandit": {
+      "findings": 0,
+      "evidence": "bandit.txt"
+    }
+  },
+  "new_behaviors": "Task forms/CSV importer, safe DOM text rendering, report/config export, explicit synthetic badge, current-input invalidation and delayed-result generation guard. Bundled app/guide is served locally.",
+  "actual_browser_and_docker": "Release manager performs these separate local gates; not inferred from in-process tests.",
+  "limits": [
+    "No authentication, durable history or multiuser controls.",
+    "Analytical methods are deterministic heuristics; not certification or complete AI/model automation.",
+    "CSV type suggestions use an eight-row preview and require review.",
+    "Browser print export uses the native print dialog."
+  ],
+  "publication": "No commit, push or repository recreation performed by this developer.",
+  "concurrency_fix": {
+    "status": "implemented and developer-regression tested",
+    "scope": "Preview API/fetch/JSON, paired previews, CSV and configuration file reads, and synthetic-example final provenance. Revision checks precede every async commit; superseded work never re-dirties or labels newer input.",
+    "test_evidence": "frontend-tests.txt",
+    "test_type": "Real application handlers imported into a small DOM fixture, with deliberately deferred API/file reads. This is not a claim of actual browser-level verification."
+  },
+  "csv_missing_record_fix": "Only physical blank lines (reader empty list) are skipped. Explicit empty records are preserved for row counts, schema diagnostics and required-field validation. All five independent CSV regressions pass in each of the three apps."
+}
