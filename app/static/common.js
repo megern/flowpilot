@@ -4,7 +4,7 @@ export const isStale = (error) => error?.code === "STALE_INPUT";
 export const assertCurrent = (generation) => {
   if (generation !== revision) {
     const error = new Error(
-      "Inputs changed while processing. Run again with the current input."
+      "Inputs changed while processing. Run again with the current input.",
     );
     error.code = "STALE_INPUT";
     throw error;
@@ -35,8 +35,12 @@ export function table(headers, rows) {
       r.append(
         el(
           "td",
-          v === null ? "Missing" : typeof v === "object" ? JSON.stringify(v) : v
-        )
+          v === null
+            ? "Missing"
+            : typeof v === "object"
+              ? JSON.stringify(v)
+              : v,
+        ),
       );
     b.append(r);
   }
@@ -47,15 +51,15 @@ export function table(headers, rows) {
       el(
         "p",
         "First 200 rows shown. Export the report for all results.",
-        "hint"
-      )
+        "hint",
+      ),
     );
   return wrap;
 }
 export function previewRows(columns, rows) {
   return table(
     columns,
-    rows.slice(0, 8).map((r) => columns.map((c) => r[c] ?? ""))
+    rows.slice(0, 8).map((r) => columns.map((c) => r[c] ?? "")),
   );
 }
 export function bars(items, max) {
@@ -103,7 +107,7 @@ export async function api(path, payload) {
     const response = await fetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
     assertCurrent(generation);
     const result = await response.json();
@@ -120,7 +124,7 @@ export async function action(task) {
   $("technical").textContent = "Analysis pending.";
   status("Working…");
   const controls = [
-    ...document.querySelectorAll("input,select,textarea,button")
+    ...document.querySelectorAll("input,select,textarea,button"),
   ].map((n) => [n, n.disabled]);
   for (const [n] of controls) n.disabled = true;
   try {
@@ -129,7 +133,7 @@ export async function action(task) {
   } catch (e) {
     status(
       e.message + "\nCheck the indicated field or column, then try again.",
-      true
+      true,
     );
   } finally {
     for (const [n, disabled] of controls)
@@ -140,7 +144,7 @@ export async function action(task) {
 export function download(name, data, type = "application/json") {
   const blob = new Blob(
     [typeof data === "string" ? data : JSON.stringify(data, null, 2)],
-    { type }
+    { type },
   );
   const url = URL.createObjectURL(blob),
     link = el("a");
@@ -211,7 +215,7 @@ export function schemaEditor(node, columns, rows) {
       "type-" + column,
       column + " type",
       ["string", "number", "boolean"],
-      column.toLowerCase().includes("id") ? "string" : inferred
+      column.toLowerCase().includes("id") ? "string" : inferred,
     );
     controls[column] = f.control;
     node.append(f.box);
@@ -238,11 +242,11 @@ export function bindFile(fileId, textId, onChange, onStart) {
 export function newReport(app, input, result, synthetic) {
   return {
     application: app,
-    version: "0.2.0",
+    version: "0.3.0",
     created_at: new Date().toISOString(),
     synthetic_example: synthetic,
     input,
-    result
+    result,
   };
 }
 export function setupExports(app, getReport, getConfig) {
@@ -258,7 +262,7 @@ export function invalidate() {
   revision++;
   for (const id of ["export-report", "print"]) $(id).disabled = true;
   $("results").replaceChildren(
-    el("p", "Inputs changed. Run analysis to refresh these results.", "empty")
+    el("p", "Inputs changed. Run analysis to refresh these results.", "empty"),
   );
 }
 export function validatedSteps(steps) {

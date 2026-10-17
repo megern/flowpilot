@@ -21,7 +21,7 @@ import {
   setOptions,
   validatedSteps,
   csvExport,
-  download
+  download,
 } from "./common.js";
 let steps = [],
   columns = [],
@@ -49,9 +49,9 @@ async function preview() {
     el(
       "p",
       `${r.row_count} source rows · first ${r.preview.length} shown`,
-      "hint"
+      "hint",
     ),
-    previewRows(columns, r.preview)
+    previewRows(columns, r.preview),
   );
   getSchema = schemaEditor($("schema"), columns, r.preview);
   renderSteps();
@@ -77,7 +77,7 @@ bindFile(
     assertCurrent(prepared.generation);
     status("Imported your CSV. Review the inferred column types.");
   },
-  dirty
+  dirty,
 );
 function renderSteps() {
   replace($("steps"));
@@ -90,13 +90,13 @@ function renderSteps() {
           "filter-field-" + index,
           "Column",
           columns,
-          step.params.field
+          step.params.field,
         ),
         comparison = selectField(
           "comparison-" + index,
           "Keep rows when",
           ["eq", "gt", "lt"],
-          step.params.comparison
+          step.params.comparison,
         );
       const label = el("label", "Comparison value"),
         input = el("input");
@@ -135,13 +135,13 @@ function renderSteps() {
           "aggregate-field-" + index,
           "Numeric column",
           columns,
-          step.params.field
+          step.params.field,
         ),
         op = selectField(
           "operation-" + index,
           "Operation",
           ["sum", "mean", "count"],
-          step.params.operation
+          step.params.operation,
         );
       field.control.onchange = () => {
         step.params.field = field.control.value;
@@ -151,14 +151,38 @@ function renderSteps() {
         step.params.operation = op.control.value;
         dirty();
       };
+      const groupLabel = el(
+          "label",
+          "Group by columns (comma-separated, optional)",
+        ),
+        groupInput = el("input");
+      groupInput.id = "group-by-" + index;
+      groupLabel.htmlFor = groupInput.id;
+      groupInput.value = (step.params.group_by || []).join(", ");
+      groupInput.oninput = () => {
+        step.params.group_by = groupInput.value
+          .split(",")
+          .map((value) => value.trim())
+          .filter(Boolean);
+        dirty();
+      };
+      controls.append(
+        groupLabel,
+        groupInput,
+        el(
+          "p",
+          "Blank groups all rows together. Up to 8 columns and 1,000 groups. Null keys form a group; missing columns are errors. Boolean, numeric and text keys stay distinct.",
+          "hint",
+        ),
+      );
       controls.append(
         field.box,
         op.box,
         el(
           "p",
           "Count uses all rows. Sum/mean require numeric values; choose the output of prior steps carefully.",
-          "hint"
-        )
+          "hint",
+        ),
       );
     }
     box.append(controls);
@@ -169,16 +193,16 @@ function renderSteps() {
         () => {
           [steps[index - 1], steps[index]] = [steps[index], steps[index - 1]];
         },
-        index === 0
+        index === 0,
       ],
       [
         "Move down",
         () => {
           [steps[index + 1], steps[index]] = [steps[index], steps[index + 1]];
         },
-        index === steps.length - 1
+        index === steps.length - 1,
       ],
-      ["Remove", () => steps.splice(index, 1), false]
+      ["Remove", () => steps.splice(index, 1), false],
     ]) {
       const b = el("button", text);
       b.disabled = disabled;
@@ -212,8 +236,8 @@ function add(op) {
           : {
               field:
                 columns.find((c) => getSchema()[c] === "number") || columns[0],
-              operation: "sum"
-            }
+              operation: "sum",
+            },
   });
   dirty();
   renderSteps();
@@ -239,7 +263,7 @@ function config() {
   return {
     csv_text: $("csv").value,
     schema,
-    steps: validatedSteps(transformed)
+    steps: validatedSteps(transformed),
   };
 }
 $("example").onclick = async () => {
@@ -248,14 +272,14 @@ $("example").onclick = async () => {
     $("csv").value = "team,value\nA,10\nB,20\nA,30";
     steps = [
       { op: "filter", params: { field: "team", comparison: "eq", value: "A" } },
-      { op: "aggregate", params: { field: "value", operation: "sum" } }
+      { op: "aggregate", params: { field: "value", operation: "sum" } },
     ];
     const prepared = await preview();
     assertCurrent(prepared.generation);
     synthetic = true;
     $("data-origin").textContent = "Synthetic example · no real records";
     status(
-      "Synthetic workflow loaded: keep team A, then sum value. Expected total: 40."
+      "Synthetic workflow loaded: keep team A, then sum value. Expected total: 40.",
     );
   } catch (e) {
     if (isStale(e)) return;
@@ -276,7 +300,7 @@ $("config-file").onchange = async () => {
       !data.schema
     )
       throw new Error(
-        "Use a FlowPilot builder configuration exported by this tool."
+        "Use a FlowPilot builder configuration exported by this tool.",
       );
     validatedSteps(data.steps);
     steps = data.steps.map((s) => ({ op: s.op, params: { ...s.params } }));
@@ -309,9 +333,9 @@ $("run").onclick = () =>
       $("results"),
       metrics([
         ["Executed nodes", result.execution_order.length],
-        ["Final rows", final.length]
+        ["Final rows", final.length],
       ]),
-      el("p", result.execution_order.join(" → "), "notice")
+      el("p", result.execution_order.join(" → "), "notice"),
     );
     for (const id of result.execution_order) {
       const rows = result.outputs[id],
@@ -323,23 +347,23 @@ $("run").onclick = () =>
         details.append(
           table(
             cols,
-            rows.slice(0, 100).map((r) => cols.map((c) => r[c] ?? null))
-          )
+            rows.slice(0, 100).map((r) => cols.map((c) => r[c] ?? null)),
+          ),
         );
         if (rows.length > 100)
           details.append(
             el(
               "p",
               "First 100 rows shown. Export the report or final CSV for all rows.",
-              "hint"
-            )
+              "hint",
+            ),
           );
       } else
         details.append(
           el(
             "p",
-            "No rows. Check whether the preceding filter excluded all data."
-          )
+            "No rows. Check whether the preceding filter excluded all data.",
+          ),
         );
       $("results").append(details);
     }
@@ -349,7 +373,7 @@ $("run").onclick = () =>
         download(
           "flowpilot-final.csv",
           csvExport([...new Set(final.flatMap((r) => Object.keys(r)))], final),
-          "text/csv"
+          "text/csv",
         );
       $("results").append(exportButton);
     }
@@ -357,8 +381,8 @@ $("run").onclick = () =>
       el(
         "p",
         "Next: inspect intermediate outputs, adjust your steps, then export the configuration for reuse. This engine does not schedule jobs or execute scripts.",
-        "hint"
-      )
+        "hint",
+      ),
     );
     $("technical").textContent = JSON.stringify(result, null, 2);
     $("export-report").disabled = false;
@@ -375,5 +399,5 @@ setupExports(
       status(e.message, true);
       return { csv_text: $("csv").value, schema: getSchema(), steps };
     }
-  }
+  },
 );
