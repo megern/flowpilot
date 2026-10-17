@@ -3,12 +3,12 @@
   <meta charset="utf-8" /><meta
     name="viewport"
     content="width=device-width,initial-scale=1"
-  /><title>FlowPilot user guide</title
+  /><title>User guide 0.3</title
   ><link rel="stylesheet" href="/assets/styles.css" />
   <main>
-    <a href="/">← Back to FlowPilot</a>
+    <a href="/">← Back to application</a>
     <article class="panel">
-      <h1>FlowPilot — User guide</h1>
+      <h1>FlowPilot — User guide · 0.3</h1>
       <h2>Intended use</h2>
       <p>
         A bounded, local transformation engine for repeatable tabular
@@ -59,7 +59,8 @@
         If a filter rejects all rows, inspect its field, type and comparison
         before aggregating. If mean fails, the preceding output may be empty. If
         a field is missing, a select or aggregate may have changed the available
-        columns. The builder does not rename columns or group by a category.
+        columns. The builder does not rename columns. Grouped aggregation is
+        available as an explicit optional step parameter.
       </p>
       <p>
         CSV exports quote every cell and prefix potentially formula-like string
@@ -71,11 +72,11 @@
       <p>
         The HTTP guard bounds state-changing JSON bodies at 2 MiB and rejects
         excessive nesting, nonfinite numbers and numeric magnitudes beyond
-        1e100. CSV imports allow up to 50 unique columns and 10000 nonblank
-        rows, with 10000-character cells. FlowPilot additionally caps each node
-        at 10000 rows and conservatively bounds retained workflow outputs at 4
-        MiB. Browser previews and tables are bounded. Splitting files can change
-        the analytical meaning: do not split event cases or evaluation splits
+        1e100. CSV imports allow up to 50 unique columns and 10000 data records,
+        with 10000-character cells. FlowPilot additionally caps each node at
+        10000 rows and conservatively bounds retained workflow outputs at 4 MiB.
+        Browser previews and tables are bounded. Splitting files can change the
+        analytical meaning: do not split event cases or evaluation splits
         arbitrarily.
       </p>
       <p>
@@ -110,7 +111,41 @@
         Run docker compose up --build and open http://127.0.0.1:8000.
         Alternatively install requirements-dev.lock with hashes in a Python 3.12
         environment and run uvicorn app.main:app --host 127.0.0.1 --port 8000.
-        Change the host port to run multiple tools. No GPU is needed.<br />
+        Change the host port to run multiple tools. No GPU is needed.
+      </p>
+      <h2>Grouped aggregation in 0.3</h2>
+      <p>
+        Aggregate steps now offer optional “Group by columns”: enter up to eight
+        unique comma-separated column names. Leaving it blank retains the
+        previous whole-table sum, mean or count behavior. A CSV with team A
+        values 10 and 30 and team B value 20 produces A sum 40 and B sum 20 when
+        grouped by team. Multiple columns form a compound key. Grouping happens
+        after all preceding transformations, so selected-away or renamed
+        aggregate columns are not available.
+      </p>
+      <p>
+        The JSON aggregate params support “group_by”: [&quot;team&quot;].
+        Results keep the grouping columns and add the operation-named value
+        column, such as sum or count. A grouping column cannot have the same
+        name as the operation result. Groups appear in first-occurrence order
+        and are capped at 1000; the existing 4 MiB retained-output budget still
+        applies.
+      </p>
+      <p>
+        Typed scalar keys preserve distinctions between boolean true, numeric 1
+        and text “1”; numeric 1 and 1.0 belong to the same numeric group.
+        Explicit null keys form a null group. Missing grouping columns and
+        list/object keys are rejected. Invalid or missing numeric values are
+        rejected by sum/mean, never silently dropped; count includes all member
+        rows including null cells. With no source rows, grouped aggregation
+        returns no groups. Ungrouped empty count/sum remain zero and mean is
+        rejected. Use explicit CSV column types to control key interpretation.
+      </p>
+      <p>
+        Configuration import/export preserves group_by, and final CSV/report
+        exports contain complete grouped outputs. The builder remains a linear
+        transformation tool; there is still no scheduling, grouping expression
+        execution or external action.<br />
       </p>
     </article>
   </main>

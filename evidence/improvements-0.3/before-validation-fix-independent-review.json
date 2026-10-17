@@ -1,0 +1,31 @@
+{
+  "reviewer": "build_security_rag_arena_data independent agent; not this application production-code author",
+  "version": "0.3.0",
+  "status": "BLOCKED",
+  "scope": "Source/method/guide inspection and independently authored regression tests; full pytest suite rerun. No browser/Docker/release claim.",
+  "findings": "Typed grouping preserves boolean/number/string/null identity and the 1000-group boundary is enforced. Guides describe count and empty-data semantics accurately.",
+  "issues": [
+    "BLOCKING: /csv/analyze accepts op as list/dict and raises uncaught TypeError at set membership, returning HTTP500 instead of422.",
+    "Grouped diagnostics do not execute external workflows; output is explicitly in-memory."
+  ],
+  "confidence": "High in checked deterministic arithmetic and validation; moderate in broader use-case validity.",
+  "full_suite_exit_code": 1,
+  "evidence": [
+    "independent-tests.txt",
+    "independent-full-suite.txt"
+  ],
+  "source_sha256": {
+    "app/USER_GUIDE.md": "92829cf033248a719015dfde76ff0d1c22f331bb8662401b592ddb0db2a4c0bc",
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/core.py": "2bfd0cadec117316445ae017c06886c253cf7011c83e99255ae0b99203fd4e0e",
+    "app/csv_import.py": "7d605fe5bf5b14b9563481752dcd4c7aef7b67e2539b9d5171a75f7ee2c10346",
+    "app/guard.py": "d1eda2150e58503114c6cf4ba36d5958aa7e2cfbb496fc0d8026b5c9da4beb77",
+    "app/main.py": "1c7fc889141b733afcc5f2f7484edbe933ded2080130a48c272a91ac8967f577",
+    "app/static/app.js": "1a6e2f27f834c4ce09b0848f02b218bef00358b1bbd550c996a05fb8d33b4cbe",
+    "app/static/common.js": "db81bb3e1ae49d7bf962ae0d2546ff86f628c7ca2a0c1cd2e0f406bf3a448a5e",
+    "app/static/guide.html": "e84e25b0ab756b46e66c635b5d4e6f374a44a89c2ba6c0b93973021daa96c5f3",
+    "app/static/index.html": "f34a047ba8f88667821635af81e3ce274c79cbb513a4a7c33ba75e2230da1c1d",
+    "app/static/styles.css": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+    "docs/USER_GUIDE.md": "92829cf033248a719015dfde76ff0d1c22f331bb8662401b592ddb0db2a4c0bc"
+  }
+}

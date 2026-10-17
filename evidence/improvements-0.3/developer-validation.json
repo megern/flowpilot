@@ -1,0 +1,28 @@
+{
+  "application": "flowpilot",
+  "version": "0.3.0",
+  "checked_at_utc": "2026-10-16T22:07:52.965518+00:00",
+  "review_type": "automated developer verification; not independent review",
+  "tests": {
+    "python": {
+      "passed": 38,
+      "log": "pytest.txt"
+    },
+    "node_frontend": {
+      "passed": 11,
+      "log": "frontend.txt"
+    },
+    "bandit": {
+      "findings": 0,
+      "log": "bandit.txt"
+    }
+  },
+  "preserved_controls": [
+    "2 MiB request bound, finite numeric/depth guards",
+    "Explicit empty CSV records retained",
+    "Late preview/file/analysis responses reject newer input generations",
+    "Safe DOM text rendering and formula-neutralized CSV export where available"
+  ],
+  "publication": "No Git operations, Docker edits or hosted release performed by this application developer.",
+  "remaining_gates": "Release manager Docker/HTTP/browser checks and separate independent QA."
+}

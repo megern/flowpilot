@@ -23,7 +23,7 @@ There is no Python execution, shell command, HTTP connector, paid service, sched
 
 ## Examples and troubleshooting
 
-If a filter rejects all rows, inspect its field, type and comparison before aggregating. If mean fails, the preceding output may be empty. If a field is missing, a select or aggregate may have changed the available columns. The builder does not rename columns or group by a category.
+If a filter rejects all rows, inspect its field, type and comparison before aggregating. If mean fails, the preceding output may be empty. If a field is missing, a select or aggregate may have changed the available columns. The builder does not rename columns. Grouped aggregation is available as an explicit optional step parameter.
 
 CSV exports quote every cell and prefix potentially formula-like string values with an apostrophe; numeric negatives remain numbers. This reduces spreadsheet formula injection risk but cannot control how every third-party spreadsheet importer behaves.
 
@@ -42,3 +42,13 @@ All bundled examples are synthetic and are labeled. Editing or importing your ow
 ## Local operation
 
 Run docker compose up --build and open http://127.0.0.1:8000. Alternatively install requirements-dev.lock with hashes in a Python 3.12 environment and run uvicorn app.main:app --host 127.0.0.1 --port 8000. Change the host port to run multiple tools. No GPU is needed.
+
+## Grouped aggregation in 0.3
+
+Aggregate steps now offer optional “Group by columns”: enter up to eight unique comma-separated column names. Leaving it blank retains the previous whole-table sum, mean or count behavior. A CSV with team A values 10 and 30 and team B value 20 produces A sum 40 and B sum 20 when grouped by team. Multiple columns form a compound key. Grouping happens after all preceding transformations, so selected-away or renamed aggregate columns are not available.
+
+The JSON aggregate params support “group_by”: ["team"]. Results keep the grouping columns and add the operation-named value column, such as sum or count. A grouping column cannot have the same name as the operation result. Groups appear in first-occurrence order and are capped at 1000; the existing 4 MiB retained-output budget still applies.
+
+Typed scalar keys preserve distinctions between boolean true, numeric 1 and text “1”; numeric 1 and 1.0 belong to the same numeric group. Explicit null keys form a null group. Missing grouping columns and list/object keys are rejected. Invalid or missing numeric values are rejected by sum/mean, never silently dropped; count includes all member rows including null cells. With no source rows, grouped aggregation returns no groups. Ungrouped empty count/sum remain zero and mean is rejected. Use explicit CSV column types to control key interpretation.
+
+Configuration import/export preserves group_by, and final CSV/report exports contain complete grouped outputs. The builder remains a linear transformation tool; there is still no scheduling, grouping expression execution or external action.

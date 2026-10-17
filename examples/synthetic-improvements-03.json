@@ -1,0 +1,19 @@
+{
+  "csv_text": "team,value\nA,10\nB,20\nA,30",
+  "schema": {
+    "team": "string",
+    "value": "number"
+  },
+  "steps": [
+    {
+      "op": "aggregate",
+      "params": {
+        "operation": "sum",
+        "field": "value",
+        "group_by": [
+          "team"
+        ]
+      }
+    }
+  ]
+}

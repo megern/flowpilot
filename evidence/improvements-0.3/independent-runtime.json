@@ -1,0 +1,164 @@
+{
+  "application": "flowpilot",
+  "port": 18205,
+  "reviewer": "independent build_security_rag_arena_data",
+  "version": "0.3.0",
+  "kind": "Actual loopback HTTP requests to Docker preview provided by orchestrator",
+  "checks": [
+    {
+      "name": "health",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "name": "actual CSV grouped sum",
+      "path": "/csv/analyze",
+      "status": 200,
+      "passed": true,
+      "response": {
+        "execution_order": [
+          "source",
+          "step_1"
+        ],
+        "outputs": {
+          "source": [
+            {
+              "team": "A",
+              "value": 10.0
+            },
+            {
+              "team": "A",
+              "value": 30.0
+            },
+            {
+              "team": "B",
+              "value": 20.0
+            }
+          ],
+          "step_1": [
+            {
+              "team": "A",
+              "sum": 40.0
+            },
+            {
+              "team": "B",
+              "sum": 20.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "reject malformed operation []",
+      "path": "/csv/analyze",
+      "status": 422,
+      "passed": true,
+      "response": {
+        "detail": [
+          {
+            "type": "literal_error",
+            "loc": [
+              "body",
+              "steps",
+              0,
+              "op"
+            ],
+            "msg": "Input should be 'filter', 'select' or 'aggregate'",
+            "input": [],
+            "ctx": {
+              "expected": "'filter', 'select' or 'aggregate'"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "reject malformed operation {}",
+      "path": "/csv/analyze",
+      "status": 422,
+      "passed": true,
+      "response": {
+        "detail": [
+          {
+            "type": "literal_error",
+            "loc": [
+              "body",
+              "steps",
+              0,
+              "op"
+            ],
+            "msg": "Input should be 'filter', 'select' or 'aggregate'",
+            "input": {},
+            "ctx": {
+              "expected": "'filter', 'select' or 'aggregate'"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "reject malformed operation ['aggregate']",
+      "path": "/csv/analyze",
+      "status": 422,
+      "passed": true,
+      "response": {
+        "detail": [
+          {
+            "type": "literal_error",
+            "loc": [
+              "body",
+              "steps",
+              0,
+              "op"
+            ],
+            "msg": "Input should be 'filter', 'select' or 'aggregate'",
+            "input": [
+              "aggregate"
+            ],
+            "ctx": {
+              "expected": "'filter', 'select' or 'aggregate'"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "served_static_sha256": {
+    "/assets/app.js": {
+      "expected_source_sha256": "1a6e2f27f834c4ce09b0848f02b218bef00358b1bbd550c996a05fb8d33b4cbe",
+      "actual_http_sha256": "1a6e2f27f834c4ce09b0848f02b218bef00358b1bbd550c996a05fb8d33b4cbe",
+      "status": 200,
+      "matches": true
+    },
+    "/assets/common.js": {
+      "expected_source_sha256": "db81bb3e1ae49d7bf962ae0d2546ff86f628c7ca2a0c1cd2e0f406bf3a448a5e",
+      "actual_http_sha256": "db81bb3e1ae49d7bf962ae0d2546ff86f628c7ca2a0c1cd2e0f406bf3a448a5e",
+      "status": 200,
+      "matches": true
+    },
+    "/guide": {
+      "expected_source_sha256": "e84e25b0ab756b46e66c635b5d4e6f374a44a89c2ba6c0b93973021daa96c5f3",
+      "actual_http_sha256": "e84e25b0ab756b46e66c635b5d4e6f374a44a89c2ba6c0b93973021daa96c5f3",
+      "status": 200,
+      "matches": true
+    },
+    "/": {
+      "expected_source_sha256": "f34a047ba8f88667821635af81e3ce274c79cbb513a4a7c33ba75e2230da1c1d",
+      "actual_http_sha256": "f34a047ba8f88667821635af81e3ce274c79cbb513a4a7c33ba75e2230da1c1d",
+      "status": 200,
+      "matches": true
+    },
+    "/assets/styles.css": {
+      "expected_source_sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+      "actual_http_sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+      "status": 200,
+      "matches": true
+    }
+  },
+  "passed": true,
+  "limitations": [
+    "Served static/guide bytes matched reviewed source files; this alone does not prove Python image provenance.",
+    "HTTP assertions check deterministic synthetic examples, not real-world external validity.",
+    "This review used actual HTTP; visual browser acceptance and CI/release verification remain separate."
+  ]
+}

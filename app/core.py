@@ -77,7 +77,7 @@ def analyze(request: Request) -> dict:
                 "source": {"rows"},
                 "select": {"fields"},
                 "filter": {"field", "comparison", "value"},
-                "aggregate": {"field", "operation"},
+                "aggregate": {"field", "operation", "group_by"},
                 "concat": set(),
             }[node.op]
             if set(p) - allowed:
@@ -144,30 +144,9 @@ def analyze(request: Request) -> dict:
                         raise ValueError(
                             "Aggregate operation must be sum, mean or count"
                         )
-                    if operation == "count":
-                        value = len(rows)
-                    else:
-                        values = [r.get(field) for r in rows]
-                        if any(
-                            isinstance(v, bool)
-                            or not isinstance(v, (int, float))
-                            or abs(v) > 1e100
-                            or not isfinite(v)
-                            for v in values
-                        ):
-                            raise ValueError("Aggregate field must be numeric")
-                        if operation == "mean" and not values:
-                            raise ValueError("Cannot average empty data")
-                        value = (
-                            sum(values)
-                            if operation == "sum"
-                            else sum(values) / len(values)
-                        )
-                    if not isfinite(value):
-                        raise ValueError(
-                            "Aggregate result exceeds finite numeric range"
-                        )
-                    result = [{operation: value}]
+                    result = aggregate_rows(
+                        rows, field, operation, p.get("group_by", [])
+                    )
             if len(result) > 10000:
                 raise ValueError("Node output exceeds 10000 rows")
             output_budget += estimated_size(result)
@@ -179,3 +158,77 @@ def analyze(request: Request) -> dict:
             order.append(node.id)
             del pending[node.id]
     return {"execution_order": order, "outputs": outputs}
+
+
+def aggregate_rows(rows, field, operation, group_by):
+    """Group scalar keys without conflating booleans, numbers and text."""
+    if (
+        not isinstance(group_by, list)
+        or len(group_by) > 8
+        or any(not isinstance(c, str) or not c for c in group_by)
+        or len(set(group_by)) != len(group_by)
+    ):
+        raise ValueError(
+            "group_by must contain at most eight unique nonempty column names"
+        )
+    if operation in group_by:
+        raise ValueError(
+            "Grouping column conflicts with the aggregate output name: " + operation
+        )
+    groups = {}
+    if not group_by:
+        groups[()] = ({}, rows)
+    else:
+        for row in rows:
+            if any(column not in row for column in group_by):
+                raise ValueError(
+                    "Grouping column is missing; explicit null keys are allowed"
+                )
+            values = [row[column] for column in group_by]
+            key = []
+            for value in values:
+                if value is None:
+                    key.append(("null", None))
+                elif isinstance(value, bool):
+                    key.append(("boolean", value))
+                elif (
+                    isinstance(value, (int, float))
+                    and abs(value) <= 1e100
+                    and isfinite(value)
+                ):
+                    key.append(("number", value))
+                elif isinstance(value, str):
+                    key.append(("string", value))
+                else:
+                    raise ValueError(
+                        "Grouping keys must be finite scalar numbers, strings, booleans or null"
+                    )
+            token = tuple(key)
+            if token not in groups:
+                if len(groups) >= 1000:
+                    raise ValueError("Grouped aggregate exceeds 1000 groups")
+                groups[token] = (dict(zip(group_by, values)), [])
+            groups[token][1].append(row)
+    result = []
+    for key_values, members in groups.values():
+        if operation == "count":
+            value = len(members)
+        else:
+            values = [row.get(field) for row in members]
+            if any(
+                isinstance(v, bool)
+                or not isinstance(v, (int, float))
+                or abs(v) > 1e100
+                or not isfinite(v)
+                for v in values
+            ):
+                raise ValueError(
+                    "Aggregate field must be numeric, with no missing or null values"
+                )
+            if operation == "mean" and not values:
+                raise ValueError("Cannot average empty data")
+            value = sum(values) if operation == "sum" else sum(values) / len(values)
+        if not isfinite(value):
+            raise ValueError("Aggregate result exceeds finite numeric range")
+        result.append({**key_values, operation: value})
+    return result

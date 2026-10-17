@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from .core import Request, analyze
 from .guard import InputGuard
 
-app = FastAPI(title="FlowPilot", version="0.2.0")
+app = FastAPI(title="FlowPilot", version="0.3.0")
 app.add_middleware(InputGuard)
 STATIC = Path(__file__).with_name("static")
 app.mount("/assets", StaticFiles(directory=STATIC), name="assets")
@@ -43,11 +43,17 @@ def preview_csv(request: CSVPreview):
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
+class CSVStep(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    op: Literal["filter", "select", "aggregate"]
+    params: dict
+
+
 class CSVWorkflow(BaseModel):
     model_config = ConfigDict(extra="forbid")
     csv_text: str = Field(min_length=1, max_length=2097152)
     columns: dict[str, Literal["string", "number", "boolean"]] = Field(alias="schema")
-    steps: list[dict] = Field(default_factory=list, max_length=49)
+    steps: list[CSVStep] = Field(default_factory=list, max_length=49)
 
 
 @app.post("/csv/analyze")
@@ -67,19 +73,11 @@ def workflow_csv(request: CSVWorkflow):
             }
         ]
         for index, step in enumerate(request.steps, start=1):
-            if set(step) != {"op", "params"} or step["op"] not in {
-                "filter",
-                "select",
-                "aggregate",
-            }:
-                raise ValueError(
-                    "Builder steps support filter, select and aggregate with explicit params."
-                )
             nodes.append(
                 {
                     "id": f"step_{index}",
-                    "op": step["op"],
-                    "params": step["params"],
+                    "op": step.op,
+                    "params": step.params,
                     "depends_on": ["source" if index == 1 else f"step_{index - 1}"],
                 }
             )

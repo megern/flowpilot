@@ -1,4 +1,4 @@
-# FlowPilot · 0.2.0
+# FlowPilot · 0.3.0
 
 **Inspectable data workflow builder.** A bounded, local transformation engine for repeatable tabular preparation. The visual builder handles a linear sequence of filters, column selections and aggregates; the API additionally supports declarative dependency graphs and concatenation.
 
@@ -57,11 +57,11 @@ python -m bandit -r app -ll
 python -m pip_audit --disable-pip --no-deps --require-hashes -r requirements.lock
 ```
 
-New 0.2 validation is recorded under `evidence/rebuild/`. Older evidence documents the earlier implementation and must not be treated as proof of this interface. Meaningful existing arithmetic/security tests are retained. CI checks Python and frontend tests, dependency vulnerabilities, secret patterns, container vulnerabilities and real HTTP smoke operation. Require the `quality` check in repository branch protection to prevent merging failing revisions; a workflow alone cannot enforce that policy.
+Historical 0.2 validation is retained under `evidence/rebuild/`; current 0.3 checks are recorded under `evidence/improvements-0.3/`. Older evidence documents the earlier implementation and must not be treated as proof of this interface. Meaningful existing arithmetic/security tests are retained. CI checks Python and frontend tests, dependency vulnerabilities, secret patterns, container vulnerabilities and real HTTP smoke operation. Require the `quality` check in repository branch protection to prevent merging failing revisions; a workflow alone cannot enforce that policy.
 
 ## Limits and troubleshooting
 
-If a filter rejects all rows, inspect its field, type and comparison before aggregating. If mean fails, the preceding output may be empty. If a field is missing, a select or aggregate may have changed the available columns. The builder does not rename columns or group by a category.
+If a filter rejects all rows, inspect its field, type and comparison before aggregating. If mean fails, the preceding output may be empty. If a field is missing, a select or aggregate may have changed the available columns. The builder does not rename columns. Grouped aggregation is available as an explicit optional step parameter.
 
 CSV exports quote every cell and prefix potentially formula-like string values with an apostrophe; numeric negatives remain numbers. This reduces spreadsheet formula injection risk but cannot control how every third-party spreadsheet importer behaves.
 
@@ -70,3 +70,17 @@ HTTP JSON requests are bounded at 2 MiB; CSV parsing is bounded at 50 columns/10
 ## License
 
 MIT. See LICENSE. Review transitive dependency licenses for your distribution. Contributors and review evidence are automated engineering work; no human reviewer is invented.
+
+## Grouped aggregation in 0.3
+
+Aggregate steps now offer optional “Group by columns”: enter up to eight unique comma-separated column names. Leaving it blank retains the previous whole-table sum, mean or count behavior. A CSV with team A values 10 and 30 and team B value 20 produces A sum 40 and B sum 20 when grouped by team. Multiple columns form a compound key. Grouping happens after all preceding transformations, so selected-away or renamed aggregate columns are not available.
+
+The JSON aggregate params support “group_by”: ["team"]. Results keep the grouping columns and add the operation-named value column, such as sum or count. A grouping column cannot have the same name as the operation result. Groups appear in first-occurrence order and are capped at 1000; the existing 4 MiB retained-output budget still applies.
+
+Typed scalar keys preserve distinctions between boolean true, numeric 1 and text “1”; numeric 1 and 1.0 belong to the same numeric group. Explicit null keys form a null group. Missing grouping columns and list/object keys are rejected. Invalid or missing numeric values are rejected by sum/mean, never silently dropped; count includes all member rows including null cells. With no source rows, grouped aggregation returns no groups. Ungrouped empty count/sum remain zero and mean is rejected. Use explicit CSV column types to control key interpretation.
+
+Configuration import/export preserves group_by, and final CSV/report exports contain complete grouped outputs. The builder remains a linear transformation tool; there is still no scheduling, grouping expression execution or external action.
+
+Fresh 0.3 validation is saved in `evidence/improvements-0.3/`; older reports describe earlier versions and are not proof of these additions. This is automated developer work with separate release-manager and independent QA gates; no human review or enterprise certification is claimed.
+
+The new synthetic request `examples/synthetic-improvements-03.json` demonstrates this version. POST it to `/csv/analyze`; all data are synthetic.
