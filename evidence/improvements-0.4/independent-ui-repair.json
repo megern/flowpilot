@@ -1,0 +1,205 @@
+{
+  "reviewer": "independent AI agent build_security_rag_arena_data",
+  "checked_at_utc": "2026-10-22T15:25:10.574401+00:00",
+  "status": "TESTED",
+  "source_changes": [
+    "app/static/app.js",
+    "tests/ui.test.mjs"
+  ],
+  "source_hashes": [
+    {
+      "sha256": "835304470dc0cd12354ec1cdc75665a9171ac4bef20478d3c623767c3e589832",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "sha256": "f1e22343125d7aa92707e4da7a8fef82ee1902309ca8998698a539dd7cf1b210",
+      "path": "Dockerfile"
+    },
+    {
+      "sha256": "8fce7f307e5f4c1d37b4fdf018f6b4ae46b5deca852b4ef24ddabbad9075182b",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "app/USER_GUIDE.md"
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "app/__init__.py"
+    },
+    {
+      "sha256": "bc340ac2d8658f547b2a58012834d302482fea40a8773ba0363b4a1b2edf251c",
+      "path": "app/access.py"
+    },
+    {
+      "sha256": "cb47182afb51bd7fc866afd8dcc7e4bd4cb34300b891fc191c53c35da1d7bf37",
+      "path": "app/core.py"
+    },
+    {
+      "sha256": "7d605fe5bf5b14b9563481752dcd4c7aef7b67e2539b9d5171a75f7ee2c10346",
+      "path": "app/csv_import.py"
+    },
+    {
+      "sha256": "d1eda2150e58503114c6cf4ba36d5958aa7e2cfbb496fc0d8026b5c9da4beb77",
+      "path": "app/guard.py"
+    },
+    {
+      "sha256": "f805913f557d118795700d528a3ecefbea2769e02cfbb94a4d803181348eee0e",
+      "path": "app/main.py"
+    },
+    {
+      "sha256": "f7a4a09a26b83052edc956cf886195c0f4687b0661a166320f460f3e3ccad0d5",
+      "path": "app/static/access.js"
+    },
+    {
+      "sha256": "cff08bccb9fe435fab9501906139ed88ffe224c136352a8ac3d2e46e25fac6d4",
+      "path": "app/static/app.js"
+    },
+    {
+      "sha256": "baf4eaf1e37282bf4fe136e4c953dc9a414582769da80aee8121384e339287e6",
+      "path": "app/static/common.js"
+    },
+    {
+      "sha256": "c9f05a1f6bfd4b69ce3320cb7bd35ace664ae54e9abd0cd20562d3eaaa8e62ea",
+      "path": "app/static/guide.html"
+    },
+    {
+      "sha256": "d77f5a8145640fa60ce159ef69b50617e4f39f07f0c13f5a4f3444abb917d6b8",
+      "path": "app/static/index.html"
+    },
+    {
+      "sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+      "path": "app/static/styles.css"
+    },
+    {
+      "sha256": "12fe193035704ca340103731c0e2a572835baa061bb982ea65667d4806979993",
+      "path": "compose.yaml"
+    },
+    {
+      "sha256": "e3d7a27dcd6b869601c33afc9532b9ea02c14387b8ff735cbdc4144c75544ddb",
+      "path": "docs/OPERATIONS.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "docs/USER_GUIDE.md"
+    },
+    {
+      "sha256": "a51222587ce50c78de2ac737112f78c9aaba70ec5f3a3632d06785b434d72c42",
+      "path": "pyproject.toml"
+    },
+    {
+      "sha256": "3e9fb16204447836fb946dd77126b42b5c249acbee4a1dd44779ba21ab2af810",
+      "path": "requirements-dev.in"
+    },
+    {
+      "sha256": "9954b5b0e9f819a2e4140da8eb0ff6e51e39bf22f97f7a9967c122e1ea85b199",
+      "path": "requirements-dev.lock"
+    },
+    {
+      "sha256": "cc2d915f3530f2b16ab605d633b94e6c8784ee70f799daf639dd30deef2361de",
+      "path": "requirements-dev.txt"
+    },
+    {
+      "sha256": "da44951925ae485ff2ba743af929b11e7b0bac5b631084de18e1324b723d6f4d",
+      "path": "requirements.lock"
+    },
+    {
+      "sha256": "bd62df965af87f46d7903a4c86d2e43d7622bbcb6145a04466e29dc6c0e0c22b",
+      "path": "requirements.txt"
+    },
+    {
+      "sha256": "d8f870bb86183aab1edff1987308c53f2e912daf5760189a681bd81a52db2ee5",
+      "path": "tests/test_access.py"
+    },
+    {
+      "sha256": "0c3489dda78f899f6e12bd9eaa05359c7d284b1ec90cde3a302d56f74c783cb0",
+      "path": "tests/test_access_independent.py"
+    },
+    {
+      "sha256": "f89fb6d34fa49fdc199a7f5b92b8d55e7dd6ca737cbb490ef93c240857040fe8",
+      "path": "tests/test_app.py"
+    },
+    {
+      "sha256": "8a287c93145e62b7d504f8dbb016e25651715fcc2053219cb4e2db4d3078cac4",
+      "path": "tests/test_improvements_03.py"
+    },
+    {
+      "sha256": "943a6c1bfb9bb90eb6c774c54717a558451798e431f2d8bf5c6499741d85cb43",
+      "path": "tests/test_improvements_04.py"
+    },
+    {
+      "sha256": "0a12fe7f4a1ec9c92c126b59fe03cf5f68392f2e9185f59e22c313f41e531afa",
+      "path": "tests/test_independent04.py"
+    },
+    {
+      "sha256": "1b52f6571bea55c4dcd0c60356073972f2327f41bf35c426b54c6946365b9a45",
+      "path": "tests/test_independent_rebuild.py"
+    },
+    {
+      "sha256": "70d506d53cd4092ec1d5e4fc35367843d2635b37cc637f9360ce87d3d2a5ad30",
+      "path": "tests/test_independent_security_science_03.py"
+    },
+    {
+      "sha256": "709e55e68eccbe12bbbdbdc502274dc0f884d588c4f1428d4afd102686a63bc5",
+      "path": "tests/test_input_limits.py"
+    },
+    {
+      "sha256": "3f297d43a7fa507f0a68bb7c00cd60a999002c3882ed29298bbcedc922a0d7fb",
+      "path": "tests/test_rebuild.py"
+    },
+    {
+      "sha256": "119db8b68aec099c7780cde2e83c1240f3e1699b5430c9f353aec3e0a58acfe9",
+      "path": "tests/test_review.py"
+    },
+    {
+      "sha256": "e98aaa41246ab12402af4e8568ded7684acb4b44a8b17df07449237c7cc58d51",
+      "path": "tests/ui.test.mjs"
+    },
+    {
+      "sha256": "94ca23ae81eaef6f0a3eddcb5dbae0970c22bfe14e91c625d5d10a83edcd5b9f",
+      "path": "tools/scan_secrets.py"
+    },
+    {
+      "sha256": "ecedd0d5c9208a193cea960d43f084b49acd0a0dcd20e709cb2c755675769fd3",
+      "path": "tools/smoke.py"
+    },
+    {
+      "sha256": "26a68d9b7b2b26c741e9f00ede37131c7f25eef474b988bdb8e6b1218d2021d9",
+      "path": "tools/test_access.mjs"
+    },
+    {
+      "sha256": "a011463941834d70d767df7204201aff25a59172bd6955be548cd34c7ae93307",
+      "path": "tools/test_access_independent.mjs"
+    }
+  ],
+  "checks": {
+    "pytest": {
+      "passed": 76,
+      "exit_code": 0
+    },
+    "node_access_and_ui": {
+      "passed": 24,
+      "exit_code": 0
+    },
+    "bandit": {
+      "exit_code": 0
+    }
+  },
+  "findings": [
+    "Sample loader holds controls disabled across both primary and secondary preview awaits. Main run handler explicitly refuses analysis while sample preparation is active.",
+    "New primary schema controls created after the first preview are disabled before the secondary await. Finally restores prior disabled states while stale report/print exports remain disabled.",
+    "Reviewed delayed-request regression verifies no analyze request during either pending preview and verifies final typed join config; error regression verifies restoration after preview failure."
+  ],
+  "served_app_js": {
+    "sha256": "cff08bccb9fe435fab9501906139ed88ffe224c136352a8ac3d2e46e25fac6d4",
+    "path": "/assets/app.js",
+    "expected_sha256": "cff08bccb9fe435fab9501906139ed88ffe224c136352a8ac3d2e46e25fac6d4",
+    "matches_current_source": true
+  },
+  "limits": [
+    "Node tests load the real app module with a synthetic DOM and mocked transport; they are not native browser acceptance.",
+    "Current API runtime evidence remains independent-runtime.json. Parent owns final image rebuild and actual browser retest."
+  ],
+  "final_rebuilt_preview_checked_at_utc": "2026-10-22T17:54:23.028060+00:00",
+  "final_runtime_evidence": "independent-runtime.json"
+}

@@ -1,0 +1,187 @@
+{
+  "reviewer": "build_security_rag_arena_data: independent AI agent; not this application production-code author",
+  "version": "0.4.0",
+  "status": "PENDING",
+  "scope": "Independent source/method/guide inspection, authored known-value and adversarial API regressions, full pytest/Node/access tests and Bandit. Runtime/browser/image/release acceptance is not claimed.",
+  "findings": [
+    "Typed scalar joins distinguish bool/number/text, match numeric1and1.0, preserve unmatched left/null-key rows, and reject cardinality/collision/output-budget failures.",
+    "CSV secondary mapping and grouped join output match hand calculations."
+  ],
+  "issues": [
+    {
+      "severity": "blocking_validation",
+      "description": "A null first composite key suppresses validation of a later object/list key. API returns200 despite documented rejection of nonscalar keys.",
+      "test": "test_composite_null_does_not_hide_an_invalid_object_key_component"
+    }
+  ],
+  "confidence": "High for checked deterministic ordinary-case arithmetic; unresolved adversarial defects limit release confidence where listed. Broader scientific/business validity remains exploratory.",
+  "checks": {
+    "full-suite": {
+      "exit_code": 0,
+      "evidence": "independent-full-suite.txt"
+    },
+    "frontend": {
+      "exit_code": 0,
+      "evidence": "independent-frontend.txt"
+    },
+    "bandit": {
+      "exit_code": 0,
+      "evidence": "independent-bandit.txt"
+    }
+  },
+  "source_stable_during_checks": true,
+  "hashes": [
+    {
+      "sha256": "eb77a88a40da87002346159b8dde51156e1a720681bcd3b86d91d251b4dfd085",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "sha256": "f1e22343125d7aa92707e4da7a8fef82ee1902309ca8998698a539dd7cf1b210",
+      "path": "Dockerfile"
+    },
+    {
+      "sha256": "8fce7f307e5f4c1d37b4fdf018f6b4ae46b5deca852b4ef24ddabbad9075182b",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "app/USER_GUIDE.md"
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "app/__init__.py"
+    },
+    {
+      "sha256": "bc340ac2d8658f547b2a58012834d302482fea40a8773ba0363b4a1b2edf251c",
+      "path": "app/access.py"
+    },
+    {
+      "sha256": "cb47182afb51bd7fc866afd8dcc7e4bd4cb34300b891fc191c53c35da1d7bf37",
+      "path": "app/core.py"
+    },
+    {
+      "sha256": "7d605fe5bf5b14b9563481752dcd4c7aef7b67e2539b9d5171a75f7ee2c10346",
+      "path": "app/csv_import.py"
+    },
+    {
+      "sha256": "d1eda2150e58503114c6cf4ba36d5958aa7e2cfbb496fc0d8026b5c9da4beb77",
+      "path": "app/guard.py"
+    },
+    {
+      "sha256": "64a82ca51a07ac049cb3f0c34d49e8415e40c3cd9d461273d18787ce9eabed01",
+      "path": "app/main.py"
+    },
+    {
+      "sha256": "f7a4a09a26b83052edc956cf886195c0f4687b0661a166320f460f3e3ccad0d5",
+      "path": "app/static/access.js"
+    },
+    {
+      "sha256": "286837cfbc8420a5eb244abcdc51bc658181581ac7d350e1cc2fa7c6d2b616d1",
+      "path": "app/static/app.js"
+    },
+    {
+      "sha256": "baf4eaf1e37282bf4fe136e4c953dc9a414582769da80aee8121384e339287e6",
+      "path": "app/static/common.js"
+    },
+    {
+      "sha256": "c9f05a1f6bfd4b69ce3320cb7bd35ace664ae54e9abd0cd20562d3eaaa8e62ea",
+      "path": "app/static/guide.html"
+    },
+    {
+      "sha256": "d77f5a8145640fa60ce159ef69b50617e4f39f07f0c13f5a4f3444abb917d6b8",
+      "path": "app/static/index.html"
+    },
+    {
+      "sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+      "path": "app/static/styles.css"
+    },
+    {
+      "sha256": "12fe193035704ca340103731c0e2a572835baa061bb982ea65667d4806979993",
+      "path": "compose.yaml"
+    },
+    {
+      "sha256": "e3d7a27dcd6b869601c33afc9532b9ea02c14387b8ff735cbdc4144c75544ddb",
+      "path": "docs/OPERATIONS.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "docs/USER_GUIDE.md"
+    },
+    {
+      "sha256": "a51222587ce50c78de2ac737112f78c9aaba70ec5f3a3632d06785b434d72c42",
+      "path": "pyproject.toml"
+    },
+    {
+      "sha256": "d8f870bb86183aab1edff1987308c53f2e912daf5760189a681bd81a52db2ee5",
+      "path": "tests/test_access.py"
+    },
+    {
+      "sha256": "0c3489dda78f899f6e12bd9eaa05359c7d284b1ec90cde3a302d56f74c783cb0",
+      "path": "tests/test_access_independent.py"
+    },
+    {
+      "sha256": "f89fb6d34fa49fdc199a7f5b92b8d55e7dd6ca737cbb490ef93c240857040fe8",
+      "path": "tests/test_app.py"
+    },
+    {
+      "sha256": "8a287c93145e62b7d504f8dbb016e25651715fcc2053219cb4e2db4d3078cac4",
+      "path": "tests/test_improvements_03.py"
+    },
+    {
+      "sha256": "910fe419bcb747eb2bc26b4f87f0629837a56d709bfa6700bbb7055e58cea3af",
+      "path": "tests/test_improvements_04.py"
+    },
+    {
+      "sha256": "0a12fe7f4a1ec9c92c126b59fe03cf5f68392f2e9185f59e22c313f41e531afa",
+      "path": "tests/test_independent04.py"
+    },
+    {
+      "sha256": "1b52f6571bea55c4dcd0c60356073972f2327f41bf35c426b54c6946365b9a45",
+      "path": "tests/test_independent_rebuild.py"
+    },
+    {
+      "sha256": "70d506d53cd4092ec1d5e4fc35367843d2635b37cc637f9360ce87d3d2a5ad30",
+      "path": "tests/test_independent_security_science_03.py"
+    },
+    {
+      "sha256": "709e55e68eccbe12bbbdbdc502274dc0f884d588c4f1428d4afd102686a63bc5",
+      "path": "tests/test_input_limits.py"
+    },
+    {
+      "sha256": "3f297d43a7fa507f0a68bb7c00cd60a999002c3882ed29298bbcedc922a0d7fb",
+      "path": "tests/test_rebuild.py"
+    },
+    {
+      "sha256": "119db8b68aec099c7780cde2e83c1240f3e1699b5430c9f353aec3e0a58acfe9",
+      "path": "tests/test_review.py"
+    },
+    {
+      "sha256": "c76c3001ba57e7ad954eb67a8d47fb844ca718693e3787afda92b5874f73e362",
+      "path": "tests/ui.test.mjs"
+    },
+    {
+      "sha256": "94ca23ae81eaef6f0a3eddcb5dbae0970c22bfe14e91c625d5d10a83edcd5b9f",
+      "path": "tools/scan_secrets.py"
+    },
+    {
+      "sha256": "ecedd0d5c9208a193cea960d43f084b49acd0a0dcd20e709cb2c755675769fd3",
+      "path": "tools/smoke.py"
+    },
+    {
+      "sha256": "26a68d9b7b2b26c741e9f00ede37131c7f25eef474b988bdb8e6b1218d2021d9",
+      "path": "tools/test_access.mjs"
+    },
+    {
+      "sha256": "a011463941834d70d767df7204201aff25a59172bd6955be548cd34c7ae93307",
+      "path": "tools/test_access_independent.mjs"
+    }
+  ],
+  "hash_schema": "Each record has sha256 first, path second. Covers app/docs/tests/tools and current README/project/container/CI configuration; excludes bytecode/evidence history.",
+  "limits": [
+    "Synthetic fixtures do not establish real-world external validity.",
+    "Greedy roadmap planning is not globally optimal and assumes evidence delivery.",
+    "Prediction metrics describe supplied labels; slices do not certify fairness or significance.",
+    "Reference conformance is adjacency/start/end allowlist checking, not full alignments or compliance.",
+    "No production code changed by this reviewer; source fixes must be independently rerun."
+  ]
+}

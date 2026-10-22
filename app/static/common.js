@@ -242,7 +242,7 @@ export function bindFile(fileId, textId, onChange, onStart) {
 export function newReport(app, input, result, synthetic) {
   return {
     application: app,
-    version: "0.3.0",
+    version: "0.4.0",
     created_at: new Date().toISOString(),
     synthetic_example: synthetic,
     input,

@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: CSV export neutralizes formula-like text without changing numeric negatives
+ok 1 - CSV export neutralizes formula-like text without changing numeric negatives
+  ---
+  duration_ms: 3.328083
+  ...
+# Subtest: builder only accepts supported declarative operations
+ok 2 - builder only accepts supported declarative operations
+  ---
+  duration_ms: 5.159792
+  ...
+# Subtest: validation errors show the input location and useful message
+ok 3 - validation errors show the input location and useful message
+  ---
+  duration_ms: 0.13125
+  ...
+# Subtest: a delayed result is rejected after input generation changes
+ok 4 - a delayed result is rejected after input generation changes
+  ---
+  duration_ms: 0.255834
+  ...
+# Subtest: pending work locks controls and restores them after failure without stale exports
+ok 5 - pending work locks controls and restores them after failure without stale exports
+  ---
+  duration_ms: 0.529292
+  ...
+# Subtest: non-200 API response becomes a validation failure
+ok 6 - non-200 API response becomes a validation failure
+  ---
+  duration_ms: 0.457
+  ...
+# Subtest: actual configuration-import handler cannot overwrite edits after delayed file read
+ok 7 - actual configuration-import handler cannot overwrite edits after delayed file read
+  ---
+  duration_ms: 27.493625
+  ...
+# Subtest: actual preview handler discards delayed schema and mapping after an edit
+ok 8 - actual preview handler discards delayed schema and mapping after an edit
+  ---
+  duration_ms: 11.1825
+  ...
+# Subtest: actual synthetic-example completion cannot label edited input as synthetic
+ok 9 - actual synthetic-example completion cannot label edited input as synthetic
+  ---
+  duration_ms: 6.909834
+  ...
+# Subtest: actual CSV-file handler cannot overwrite edits after delayed text read
+ok 10 - actual CSV-file handler cannot overwrite edits after delayed text read
+  ---
+  duration_ms: 8.556166
+  ...
+# Subtest: grouping columns from the real builder survive configuration export
+ok 11 - grouping columns from the real builder survive configuration export
+  ---
+  duration_ms: 9.209625
+  ...
+# Subtest: actual secondary join preserves typed lookup schema and keys in builder export
+ok 12 - actual secondary join preserves typed lookup schema and keys in builder export
+  ---
+  duration_ms: 5.293417
+  ...
+# Subtest: delayed secondary preview cannot replace schema after primary input edit
+ok 13 - delayed secondary preview cannot replace schema after primary input edit
+  ---
+  duration_ms: 7.016667
+  ...
+# Subtest: bubbling file change does not invalidate its own secondary CSV import
+ok 14 - bubbling file change does not invalidate its own secondary CSV import
+  ---
+  duration_ms: 5.695125
+  ...
+# Subtest: joined sample locks Run and new schema controls through both delayed previews
+ok 15 - joined sample locks Run and new schema controls through both delayed previews
+  ---
+  duration_ms: 13.856875
+  ...
+# Subtest: joined sample restores controls on preview error and never enables stale report exports
+ok 16 - joined sample restores controls on preview error and never enables stale report exports
+  ---
+  duration_ms: 5.572958
+  ...
+# Subtest: Default page does not attach a credential or change request bodies
+ok 17 - Default page does not attach a credential or change request bodies
+  ---
+  duration_ms: 66.614334
+  ...
+# Subtest: Actual key form affects same-origin requests only and clears its field
+ok 18 - Actual key form affects same-origin requests only and clears its field
+  ---
+  duration_ms: 5.424292
+  ...
+# Subtest: Explicit authorization and Request headers are preserved
+ok 19 - Explicit authorization and Request headers are preserved
+  ---
+  duration_ms: 4.259875
+  ...
+# Subtest: Clear and page reload remove the credential
+ok 20 - Clear and page reload remove the credential
+  ---
+  duration_ms: 2.259958
+  ...
+# Subtest: Cross-constructor external Request must never receive the server access key
+ok 21 - Cross-constructor external Request must never receive the server access key
+  ---
+  duration_ms: 68.935
+  ...
+# Subtest: Protocol-relative external URL and suffix-lookalike origin never receive key
+ok 22 - Protocol-relative external URL and suffix-lookalike origin never receive key
+  ---
+  duration_ms: 1.467625
+  ...
+# Subtest: Own URL property on a genuine external Request cannot spoof its destination
+ok 23 - Own URL property on a genuine external Request cannot spoof its destination
+  ---
+  duration_ms: 3.614625
+  ...
+# Subtest: Own href property on external URL and unknown objects cannot obtain implicit credential
+ok 24 - Own href property on external URL and unknown objects cannot obtain implicit credential
+  ---
+  duration_ms: 1.5685
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 375.30025

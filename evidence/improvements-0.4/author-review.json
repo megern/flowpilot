@@ -1,0 +1,41 @@
+{
+  "python_tests": 54,
+  "frontend_tests": 14,
+  "routes": [
+    "POST /analyze op=join",
+    "POST /csv/analyze optional join"
+  ],
+  "limits": [
+    "Exactly two ordered distinct DAG dependencies; inner/left only",
+    "1\u20138 typed join keys; one_to_one/many_to_one; nonnull right uniqueness; null never matches",
+    "10000 output rows/node; retained conservative4MiB DAG outputs; 47 builder steps with join"
+  ],
+  "example": "examples/synthetic-join.json",
+  "application": "flowpilot",
+  "version": "0.4.0",
+  "author": "build_enterprise automated application developer",
+  "independent_review": false,
+  "status": "TESTED",
+  "checked_at_utc": "2026-10-22T14:10:53.923272+00:00",
+  "scope": "Developer unit/API integration and frontend DOM-fixture transport/state tests before root shared access integration. Not browser rendering, Docker acceptance, hosted CI or a publication claim. Root integrates and tests shared access after this checkpoint.",
+  "test_commands": [
+    "work/.venv/bin/python -m pytest -q (repository cwd)",
+    "node --test tests/ui.test.mjs",
+    "work/.venv/bin/python -m bandit -r app -ll"
+  ],
+  "logs": [
+    "pytest.txt",
+    "frontend.txt",
+    "bandit.txt"
+  ],
+  "bandit": "PASS; configured static scan0 findings",
+  "feature_source_sha256": {
+    "app/core.py": "90a81d240fa0d12c9785525b28324538d70d855f741f834118e3d7599bb6f761",
+    "app/static/app.js": "286837cfbc8420a5eb244abcdc51bc658181581ac7d350e1cc2fa7c6d2b616d1",
+    "tests/test_improvements_04.py": "910fe419bcb747eb2bc26b4f87f0629837a56d709bfa6700bbb7055e58cea3af",
+    "tests/ui.test.mjs": "c76c3001ba57e7ad954eb67a8d47fb844ca718693e3787afda92b5874f73e362"
+  },
+  "synthetic_examples_only": true,
+  "shared_constraints": "No new dependencies, dynamic execution, external actions or paid services. Existing streamed2MiB guard, CSV empty records and asynchronous revision safeguards retained.",
+  "mutations": "No Git commits/pushes, Docker changes or root-owned access files edited."
+}

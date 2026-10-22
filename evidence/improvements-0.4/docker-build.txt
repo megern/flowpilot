@@ -1,0 +1,42 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 30B 0.1s
+#1 transferring dockerfile: 741B 0.3s done
+#1 DONE 0.4s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-alpine@sha256:92abd2ba1bdfb48b1e2ac224b582dd1558d0d4bb11c903b126b5bf9c448fd656
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 98B 0.4s done
+#3 DONE 0.5s
+
+#4 [1/5] FROM docker.io/library/python:3.12-alpine@sha256:92abd2ba1bdfb48b1e2ac224b582dd1558d0d4bb11c903b126b5bf9c448fd656
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 951B 0.3s done
+#5 DONE 0.4s
+
+#6 [2/5] WORKDIR /service
+#6 CACHED
+
+#7 [3/5] COPY requirements.lock .
+#7 CACHED
+
+#8 [4/5] RUN pip install --no-cache-dir --require-hashes -r requirements.lock && python -m pip uninstall -y pip && rm -rf /usr/local/lib/python3.12/ensurepip && adduser -D -u 10001 runner
+#8 CACHED
+
+#9 [5/5] COPY app ./app
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 writing image sha256:4fe5f380fee5b6f8bee18cef30ad7a7924c69777d898aba8330cca4850d8b9fa 0.0s done
+#10 naming to docker.io/library/venturelab-flowpilot:0.4.0
+#10 naming to docker.io/library/venturelab-flowpilot:0.4.0 0.0s done
+#10 DONE 0.2s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/p9hftsz9c4b9sazen8zgdxhvm

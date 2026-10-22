@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class Node(BaseModel):
     model_config = ConfigDict(extra="forbid")
     id: str = Field(min_length=1, max_length=100)
-    op: Literal["source", "select", "filter", "aggregate", "concat"]
+    op: Literal["source", "select", "filter", "aggregate", "concat", "join"]
     depends_on: list[str] = Field(default_factory=list, max_length=50)
     params: dict[str, Any] = Field(default_factory=dict)
 
@@ -79,6 +79,7 @@ def analyze(request: Request) -> dict:
                 "filter": {"field", "comparison", "value"},
                 "aggregate": {"field", "operation", "group_by"},
                 "concat": set(),
+                "join": {"left_on", "right_on", "how", "cardinality", "right_prefix"},
             }[node.op]
             if set(p) - allowed:
                 raise ValueError("Unexpected parameters for " + node.op)
@@ -97,6 +98,17 @@ def analyze(request: Request) -> dict:
                     raise ValueError("Source rows must be objects")
                 validate_cells(rows)
                 result = rows
+            elif node.op == "join":
+                if (
+                    len(node.depends_on) != 2
+                    or node.depends_on[0] == node.depends_on[1]
+                ):
+                    raise ValueError(
+                        "Join requires two distinct ordered dependencies: left, right"
+                    )
+                result = join_rows(
+                    outputs[node.depends_on[0]], outputs[node.depends_on[1]], p
+                )
             elif node.op == "concat":
                 if not node.depends_on:
                     raise ValueError("Concat requires dependencies")
@@ -231,4 +243,89 @@ def aggregate_rows(rows, field, operation, group_by):
         if not isfinite(value):
             raise ValueError("Aggregate result exceeds finite numeric range")
         result.append({**key_values, operation: value})
+    return result
+
+
+def join_rows(left, right, params):
+    """Bounded SQL-like null semantics, with declared right uniqueness."""
+    left_on = params.get("left_on")
+    right_on = params.get("right_on")
+    for columns in [left_on, right_on]:
+        if (
+            not isinstance(columns, list)
+            or not 1 <= len(columns) <= 8
+            or any(not isinstance(c, str) or not c for c in columns)
+            or len(set(columns)) != len(columns)
+        ):
+            raise ValueError("Join keys must be 1–8 distinct nonempty column names")
+    if len(left_on) != len(right_on):
+        raise ValueError("Join key lists must have equal lengths")
+    how = params.get("how", "inner")
+    cardinality = params.get("cardinality", "many_to_one")
+    prefix = params.get("right_prefix", "right_")
+    if how not in ("inner", "left") or cardinality not in ("one_to_one", "many_to_one"):
+        raise ValueError(
+            "Join supports inner/left and one_to_one/many_to_one cardinality only"
+        )
+    if not isinstance(prefix, str) or not prefix or len(prefix) > 80:
+        raise ValueError("Use a nonempty right_prefix up to 80 characters")
+
+    def key(row, columns):
+        if any(c not in row for c in columns):
+            raise ValueError(
+                "Join key is missing; use explicit null for unmatched values"
+            )
+        tokens = []
+        for c in columns:
+            v = row[c]
+            if v is None:
+                tokens.append(("null", None))
+            elif isinstance(v, bool):
+                tokens.append(("boolean", v))
+            elif isinstance(v, (int, float)) and isfinite(v) and abs(v) <= 1e100:
+                tokens.append(("number", v))
+            elif isinstance(v, str):
+                tokens.append(("string", v))
+            else:
+                raise ValueError(
+                    "Join keys must be finite scalar numbers, strings, booleans or null"
+                )
+        return None if any(kind == "null" for kind, _ in tokens) else tuple(tokens)
+
+    right_columns = sorted({c for row in right for c in row})
+    left_columns = {c for row in left for c in row}
+    if any(prefix + c in left_columns for c in right_columns):
+        raise ValueError(
+            "Right-prefixed output column collides with a left column; change right_prefix"
+        )
+    index = {}
+    for row in right:
+        k = key(row, right_on)
+        if k is not None:
+            if k in index:
+                raise ValueError(
+                    "Declared join cardinality requires unique nonnull right keys; many-to-many joins are not supported"
+                )
+            index[k] = row
+    seen = set()
+    result = []
+    for row in left:
+        k = key(row, left_on)
+        if k is not None and cardinality == "one_to_one":
+            if k in seen:
+                raise ValueError("one_to_one requires unique nonnull left keys")
+            seen.add(k)
+        match = index.get(k) if k is not None else None
+        if match is not None or how == "left":
+            if len(result) >= 10000:
+                raise ValueError("Join output exceeds 10000 rows")
+            result.append(
+                {
+                    **row,
+                    **{
+                        prefix + c: match.get(c) if match is not None else None
+                        for c in right_columns
+                    },
+                }
+            )
     return result

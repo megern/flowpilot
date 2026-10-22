@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: CSV export neutralizes formula-like text without changing numeric negatives
+ok 1 - CSV export neutralizes formula-like text without changing numeric negatives
+  ---
+  duration_ms: 5.07225
+  ...
+# Subtest: builder only accepts supported declarative operations
+ok 2 - builder only accepts supported declarative operations
+  ---
+  duration_ms: 2.602167
+  ...
+# Subtest: validation errors show the input location and useful message
+ok 3 - validation errors show the input location and useful message
+  ---
+  duration_ms: 0.417791
+  ...
+# Subtest: a delayed result is rejected after input generation changes
+ok 4 - a delayed result is rejected after input generation changes
+  ---
+  duration_ms: 0.791833
+  ...
+# Subtest: pending work locks controls and restores them after failure without stale exports
+ok 5 - pending work locks controls and restores them after failure without stale exports
+  ---
+  duration_ms: 1.07425
+  ...
+# Subtest: non-200 API response becomes a validation failure
+ok 6 - non-200 API response becomes a validation failure
+  ---
+  duration_ms: 0.637833
+  ...
+# Subtest: actual configuration-import handler cannot overwrite edits after delayed file read
+ok 7 - actual configuration-import handler cannot overwrite edits after delayed file read
+  ---
+  duration_ms: 103.092083
+  ...
+# Subtest: actual preview handler discards delayed schema and mapping after an edit
+ok 8 - actual preview handler discards delayed schema and mapping after an edit
+  ---
+  duration_ms: 5.366875
+  ...
+# Subtest: actual synthetic-example completion cannot label edited input as synthetic
+ok 9 - actual synthetic-example completion cannot label edited input as synthetic
+  ---
+  duration_ms: 9.674875
+  ...
+# Subtest: actual CSV-file handler cannot overwrite edits after delayed text read
+ok 10 - actual CSV-file handler cannot overwrite edits after delayed text read
+  ---
+  duration_ms: 8.143333
+  ...
+# Subtest: grouping columns from the real builder survive configuration export
+ok 11 - grouping columns from the real builder survive configuration export
+  ---
+  duration_ms: 6.09625
+  ...
+# Subtest: actual secondary join preserves typed lookup schema and keys in builder export
+ok 12 - actual secondary join preserves typed lookup schema and keys in builder export
+  ---
+  duration_ms: 6.018167
+  ...
+# Subtest: delayed secondary preview cannot replace schema after primary input edit
+ok 13 - delayed secondary preview cannot replace schema after primary input edit
+  ---
+  duration_ms: 4.779708
+  ...
+# Subtest: bubbling file change does not invalidate its own secondary CSV import
+ok 14 - bubbling file change does not invalidate its own secondary CSV import
+  ---
+  duration_ms: 6.781584
+  ...
+# Subtest: Default page does not attach a credential or change request bodies
+ok 15 - Default page does not attach a credential or change request bodies
+  ---
+  duration_ms: 53.100792
+  ...
+# Subtest: Actual key form affects same-origin requests only and clears its field
+ok 16 - Actual key form affects same-origin requests only and clears its field
+  ---
+  duration_ms: 3.397875
+  ...
+# Subtest: Explicit authorization and Request headers are preserved
+ok 17 - Explicit authorization and Request headers are preserved
+  ---
+  duration_ms: 1.563583
+  ...
+# Subtest: Clear and page reload remove the credential
+ok 18 - Clear and page reload remove the credential
+  ---
+  duration_ms: 2.389917
+  ...
+# Subtest: Cross-constructor external Request must never receive the server access key
+ok 19 - Cross-constructor external Request must never receive the server access key
+  ---
+  duration_ms: 199.908167
+  ...
+# Subtest: Protocol-relative external URL and suffix-lookalike origin never receive key
+ok 20 - Protocol-relative external URL and suffix-lookalike origin never receive key
+  ---
+  duration_ms: 2.19225
+  ...
+# Subtest: Own URL property on a genuine external Request cannot spoof its destination
+ok 21 - Own URL property on a genuine external Request cannot spoof its destination
+  ---
+  duration_ms: 0.977833
+  ...
+# Subtest: Own href property on external URL and unknown objects cannot obtain implicit credential
+ok 22 - Own href property on external URL and unknown objects cannot obtain implicit credential
+  ---
+  duration_ms: 0.607209
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 651.617875
