@@ -2,6 +2,9 @@ services:
   app:
     build: .
     ports: ["127.0.0.1:8000:8000"]
+    environment:
+      VENTURELAB_API_KEY: ${VENTURELAB_API_KEY:-}
+      VENTURELAB_MAX_INFLIGHT: ${VENTURELAB_MAX_INFLIGHT:-1}
     read_only: true
     tmpfs: ["/tmp"]
     security_opt: ["no-new-privileges:true"]

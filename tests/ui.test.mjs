@@ -164,6 +164,9 @@ function applicationDOM() {
       this.children = [];
       this.append(...items);
     }
+    before(...items) {
+      this.siblings = items;
+    }
     after(...items) {
       this.siblings = items;
     }
@@ -173,7 +176,14 @@ function applicationDOM() {
     }
     querySelectorAll(selector) {
       return this.children.flatMap((n) => [
-        ...(n.tagName === "input" && (selector !== "input:checked" || n.checked)
+        ...((
+          selector === "select"
+            ? n.tagName === "select"
+            : selector === "label"
+              ? n.tagName === "label"
+              : n.tagName === "input" &&
+                (selector !== "input:checked" || n.checked)
+        )
           ? [n]
           : []),
         ...n.querySelectorAll(selector),
@@ -191,6 +201,7 @@ function applicationDOM() {
     getElementById: get,
     createElement: (tag) => new Element(tag),
     querySelectorAll: () => [...nodes.values()],
+    querySelector: () => get("input-panel"),
   };
   return { nodes, get };
 }
@@ -369,4 +380,177 @@ test("grouping columns from the real builder survive configuration export", asyn
     URL.createObjectURL = original;
     URL.revokeObjectURL = revoke;
   }
+});
+
+test("actual secondary join preserves typed lookup schema and keys in builder export", async () => {
+  const fixture = await realApplication();
+  global.fetch = async (path, options) => {
+    const body = JSON.parse(options.body);
+    const secondary = body.csv_text.startsWith("customer,region");
+    return {
+      ok: true,
+      json: async () =>
+        secondary
+          ? {
+              columns: ["customer", "region"],
+              row_count: 2,
+              preview: [
+                { customer: "A", region: "North" },
+                { customer: "B", region: "South" },
+              ],
+            }
+          : {
+              columns: ["customer", "amount"],
+              row_count: 3,
+              preview: [
+                { customer: "A", amount: "10" },
+                { customer: "B", amount: "20" },
+                { customer: "A", amount: "5" },
+              ],
+            },
+    };
+  };
+  await fixture.get("join-example").onclick();
+  let exported;
+  const original = URL.createObjectURL,
+    revoke = URL.revokeObjectURL;
+  URL.createObjectURL = (b) => ((exported = b), "blob:test");
+  URL.revokeObjectURL = () => {};
+  try {
+    fixture.get("export-config").onclick();
+    const value = JSON.parse(await exported.text());
+    assert.equal(value.schema.amount, "number");
+    assert.equal(value.join.schema.customer, "string");
+    assert.equal(value.join.schema.region, "string");
+    assert.deepEqual(value.join.left_on, ["customer"]);
+    assert.deepEqual(value.join.right_on, ["customer"]);
+    assert.equal(value.join.how, "left");
+    assert.equal(value.join.cardinality, "many_to_one");
+  } finally {
+    URL.createObjectURL = original;
+    URL.revokeObjectURL = revoke;
+  }
+});
+test("delayed secondary preview cannot replace schema after primary input edit", async () => {
+  const fixture = await realApplication();
+  let release;
+  global.fetch = () => new Promise((r) => (release = r));
+  fixture.get("join-csv").value = "k,v\n1,old";
+  const pending = fixture.get("join-preview").onclick();
+  markEdited(fixture);
+  fixture.get("join-schema").textContent = "Current schema sentinel";
+  release(previewResponse());
+  await pending;
+  assert.equal(
+    fixture.get("join-schema").textContent,
+    "Current schema sentinel",
+  );
+  assert.doesNotMatch(fixture.get("data-origin").textContent, /Synthetic/);
+});
+
+test("bubbling file change does not invalidate its own secondary CSV import", async () => {
+  const fixture = await realApplication();
+  let release;
+  fixture.get("join-file").files = [
+    { size: 50, text: () => new Promise((r) => (release = r)) },
+  ];
+  global.fetch = async () => ({
+    ok: true,
+    json: async () => ({
+      columns: ["lookup", "v"],
+      row_count: 1,
+      preview: [{ lookup: "A", v: "1" }],
+    }),
+  });
+  const pending = fixture.get("join-file").onchange();
+  fixture
+    .get("join-panel")
+    .listeners.change({ target: fixture.get("join-file") });
+  release("lookup,v\nA,1");
+  await pending;
+  assert.equal(fixture.get("join-csv").value, "lookup,v\nA,1");
+  assert.equal(fixture.get("join-type-v").value, "number");
+});
+
+test("joined sample locks Run and new schema controls through both delayed previews", async () => {
+  const fixture = await realApplication(),
+    pendingRequests = [];
+  fixture.get("join-cardinality").value = "one_to_one";
+  fixture.get("join-how").value = "inner";
+  global.fetch = (path, init) =>
+    new Promise((resolve) => pendingRequests.push({ path, init, resolve }));
+  const loading = fixture.get("join-example").onclick();
+  assert.equal(fixture.get("run").disabled, true);
+  assert.equal(fixture.get("join-example").disabled, true);
+  assert.equal(fixture.get("csv").disabled, true);
+  // Even an explicit handler call must not start analysis during the load.
+  await fixture.get("run").onclick();
+  assert.equal(pendingRequests.length, 1);
+  assert.equal(pendingRequests[0].path, "/csv/preview");
+  pendingRequests[0].resolve({
+    ok: true,
+    json: async () => ({
+      columns: ["customer", "amount"],
+      row_count: 3,
+      preview: [
+        { customer: "A", amount: "10" },
+        { customer: "B", amount: "20" },
+        { customer: "A", amount: "5" },
+      ],
+    }),
+  });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(pendingRequests.length, 2);
+  assert.equal(fixture.get("run").disabled, true);
+  assert.equal(fixture.get("type-amount").disabled, true);
+  await fixture.get("run").onclick();
+  assert.equal(pendingRequests.length, 2);
+  pendingRequests[1].resolve({
+    ok: true,
+    json: async () => ({
+      columns: ["customer", "region"],
+      row_count: 2,
+      preview: [
+        { customer: "A", region: "North" },
+        { customer: "B", region: "South" },
+      ],
+    }),
+  });
+  await loading;
+  assert.equal(fixture.get("run").disabled, false);
+  assert.equal(fixture.get("csv").disabled, false);
+  assert.equal(fixture.get("type-amount").disabled, false);
+  assert.equal(fixture.get("join-example").disabled, false);
+  assert.equal(fixture.get("export-report").disabled, true);
+  assert.match(fixture.get("data-origin").textContent, /Synthetic paired/);
+  let request;
+  global.fetch = async (path, init) => {
+    request = JSON.parse(init.body);
+    return {
+      ok: false,
+      json: async () => ({ detail: "Synthetic transport sentinel" }),
+    };
+  };
+  await fixture.get("run").onclick();
+  assert.deepEqual(request.join.schema, {
+    customer: "string",
+    region: "string",
+  });
+  assert.equal(request.join.how, "left");
+  assert.equal(request.join.cardinality, "many_to_one");
+});
+
+test("joined sample restores controls on preview error and never enables stale report exports", async () => {
+  const fixture = await realApplication();
+  fixture.get("export-report").disabled = false;
+  global.fetch = async () => ({
+    ok: false,
+    json: async () => ({ detail: "Synthetic preview failure" }),
+  });
+  await fixture.get("join-example").onclick();
+  assert.equal(fixture.get("run").disabled, false);
+  assert.equal(fixture.get("csv").disabled, false);
+  assert.equal(fixture.get("join-example").disabled, false);
+  assert.equal(fixture.get("export-report").disabled, true);
+  assert.match(fixture.get("status").textContent, /Synthetic preview failure/);
 });

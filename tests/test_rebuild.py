@@ -12,7 +12,7 @@ def test_task_workbench_and_bundled_assets():
     for path in ["/assets/app.js", "/assets/common.js", "/assets/styles.css", "/guide"]:
         assert client.get(path).status_code == 200
     assert "Intended use" in client.get("/guide").text
-    assert app.version == "0.3.0"
+    assert app.version == "0.4.0"
 
 
 from app.csv_import import parse_csv

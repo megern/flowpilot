@@ -1,4 +1,4 @@
-# FlowPilot · 0.3.0
+# FlowPilot · 0.4.0
 
 **Inspectable data workflow builder.** A bounded, local transformation engine for repeatable tabular preparation. The visual builder handles a linear sequence of filters, column selections and aggregates; the API additionally supports declarative dependency graphs and concatenation.
 
@@ -65,7 +65,7 @@ If a filter rejects all rows, inspect its field, type and comparison before aggr
 
 CSV exports quote every cell and prefix potentially formula-like string values with an apostrophe; numeric negatives remain numbers. This reduces spreadsheet formula injection risk but cannot control how every third-party spreadsheet importer behaves.
 
-HTTP JSON requests are bounded at 2 MiB; CSV parsing is bounded at 50 columns/10000 rows. Requests are local CPU work, no outside actions. Authentication and HTTPS are required when deploying beyond a trusted localhost environment. See the user guide for detailed method/resource limitations. This release provides no authentication, durable history or multi-user access management.
+HTTP JSON requests are bounded at 2 MiB; CSV parsing is bounded at 50 columns/10000 rows. Requests are local CPU work, no outside actions. Authentication and HTTPS are required when deploying beyond a trusted localhost environment. See the user guide for detailed method/resource limitations. This release provides optional shared-key API access and per-process compute admission. It does not provide durable history or multi-user access management; see docs/OPERATIONS.md.
 
 ## License
 
@@ -84,3 +84,21 @@ Configuration import/export preserves group_by, and final CSV/report exports con
 Fresh 0.3 validation is saved in `evidence/improvements-0.3/`; older reports describe earlier versions and are not proof of these additions. This is automated developer work with separate release-manager and independent QA gates; no human review or enterprise certification is claimed.
 
 The new synthetic request `examples/synthetic-improvements-03.json` demonstrates this version. POST it to `/csv/analyze`; all data are synthetic.
+
+## Two-source joins in 0.4
+
+The optional secondary CSV section joins data before the existing linear filter/select/aggregate steps. Preview the primary CSV, enable the join, import or paste a secondary CSV, preview it and choose types for both tables. Enter ordered comma-separated left and right key lists (1–8 keys each). Choose inner or left join and declare one_to_one or many_to_one. The synthetic paired join uses three transactions for customers A/B and a two-row region lookup; it produces three rows with right_region before any optional steps.
+
+Numeric 1 and 1.0 match, while boolean true and text “1” stay distinct. Composite keys match only if every component matches. Any null component never matches, including another null, as in SQL. Missing key columns are errors. Nonnull right keys must always be unique; one_to_one additionally requires unique nonnull left keys. Duplicate null keys are allowed because they never match. Many-to-many joins are deliberately rejected. There is no arbitrary expression, remote database connection or executable join predicate.
+
+Left joins preserve every left row and fill unmatched right columns with null; inner joins keep matched left rows only. Right fields are prefixed right_ in the builder. A prefixed name colliding with a left column is rejected rather than silently overwriting it. The JSON DAG API can set right_prefix explicitly. Row order follows the left input. Empty right input has no discoverable right columns, so left rows remain unchanged in a left join. A right table's union of column names determines its output columns; absent non-key right cells become null.
+
+POST /analyze accepts an op join node with exactly two distinct ordered dependencies [left, right] and params left_on, right_on, how, cardinality and optional right_prefix. Both dependencies are real executed source/transform nodes in the DAG. POST /csv/analyze adds an optional join object with secondary csv_text, schema and the same parameters. Old calls without join are unchanged. A joined builder has at most 47 subsequent steps (50 total nodes); every node remains limited to 10,000 rows and the full retained DAG outputs share a conservative 4 MiB budget. The request body remains bounded to 2 MiB, including both CSV strings together.
+
+After a join, select or aggregate the right_ fields just like primary columns. Numeric filters honor secondary column types. Builder configuration/report/final CSV exports retain the join and its actual results. Reimported settings are treated as user input. If cardinality fails, deduplicate or correct the lookup upstream; never discard duplicates silently to make the check pass. Example: examples/synthetic-join.json posts directly to /csv/analyze and groups transaction amount by right_region, producing North=15 and South=20.
+
+Developer validation for 0.4 is saved in `evidence/improvements-0.4/`. Prior evidence describes prior versions. Local developer tests do not establish independent acceptance, hosted CI success or deployment readiness.
+
+## Server access and operating limits
+
+See [Operations](docs/OPERATIONS.md) for optional shared-key API access, per-process request admission, platform notes and the additional work needed for public multi-user hosting.

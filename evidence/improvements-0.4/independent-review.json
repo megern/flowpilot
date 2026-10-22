@@ -1,0 +1,603 @@
+{
+  "reviewer": "build_security_rag_arena_data: independent AI agent; not this application production-code author",
+  "version": "0.4.0",
+  "status": "TESTED",
+  "scope": "Independent source/method/guide inspection, known-value and adversarial regressions, full pytest/Node/access tests and Bandit, actual loopback HTTP feature/error probes, and exact served static/index/guide byte comparison. Visual browser, image provenance and release acceptance are not claimed.",
+  "findings": [
+    "Typed scalar joins distinguish bool/number/text, match numeric1and1.0, preserve unmatched left/null-key rows, and reject cardinality/collision/output-budget failures.",
+    "CSV secondary mapping and grouped join output match hand calculations.",
+    "Original author now validates all composite-key components before null no-match semantics. The independent null-plus-object regression returns422; other join/cardinality/budget examples remain correct.",
+    "Independent retest accepts author repair for premature Run during asynchronous paired sample preparation:76 Python/24 Node tests and Bandit pass; details in independent-ui-repair.json."
+  ],
+  "issues": [],
+  "confidence": "High for independently checked deterministic arithmetic, typed validation and bounded output semantics; moderate for scientific/business applicability, conditional on stated self-report/reference/sample assumptions.",
+  "checks": {
+    "full-suite": {
+      "exit_code": 0,
+      "evidence": "independent-full-suite.txt",
+      "passed_tests": 76
+    },
+    "frontend": {
+      "exit_code": 0,
+      "evidence": "independent-frontend.txt",
+      "passed_tests": 24
+    },
+    "bandit": {
+      "exit_code": 0,
+      "evidence": "independent-bandit.txt"
+    },
+    "actual-http-runtime": {
+      "passed": true,
+      "evidence": "independent-runtime.json",
+      "checks_passed": 5,
+      "checks_total": 5,
+      "served_file_matches": 6,
+      "served_files_total": 6,
+      "source_stable_during_runtime": true
+    },
+    "ui-sample-preparation-repair": {
+      "status": "TESTED",
+      "evidence": "independent-ui-repair.json",
+      "checked_at_utc": "2026-10-22T15:25:10.574401+00:00"
+    },
+    "root-backend-byte-proof": {
+      "sha256": "e5392418dda519a74650eb84e06dd5fca9114b5cfb7b5ed4a8f1b719ba91d3b8",
+      "path": "outputs/evidence/improvements-0.4/runtime-source.json",
+      "container": "72d1c550f289a813a7181a93cee777976baaf0be2985815f597b6cd4e57b48cc",
+      "complete_app_tree_matches": true,
+      "file_count": 13
+    },
+    "root-native-health-refresh": {
+      "sha256": "ff95d699662943bcb83d8c2229305fb2c45bf4191c6c77f552139197b22c3289",
+      "path": "outputs/evidence/improvements-0.4/independent-native-health.json",
+      "checked_at_utc": "2026-10-22T17:54:43.830954+00:00",
+      "scope": "Reviewed independent native BusyBox wget success/404/time-limit evidence on AgentShield as a shared Dockerfile-command sample; each enterprise final docker-runtime.json separately confirms healthy current image/container. Root-authored Dockerfile health command changed only; app source unchanged."
+    },
+    "root-current-native-container": {
+      "sha256": "810cf07eda4a659931a69cfde92464ec5ee004f501ea7dff6ef963e9f6b395e8",
+      "path": "evidence/improvements-0.4/docker-runtime.json",
+      "container_id": "72d1c550f289a813a7181a93cee777976baaf0be2985815f597b6cd4e57b48cc",
+      "image_id": "sha256:4fe5f380fee5b6f8bee18cef30ad7a7924c69777d898aba8330cca4850d8b9fa",
+      "health": "healthy",
+      "matches_current_source_proof_container": true
+    }
+  },
+  "source_stable_during_checks": true,
+  "hashes": [
+    {
+      "sha256": "835304470dc0cd12354ec1cdc75665a9171ac4bef20478d3c623767c3e589832",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "sha256": "88f17372fdd7608502821783b4b09ce6964e4e746fd1635e98ccadfe71ed5adb",
+      "path": "Dockerfile"
+    },
+    {
+      "sha256": "8fce7f307e5f4c1d37b4fdf018f6b4ae46b5deca852b4ef24ddabbad9075182b",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "app/USER_GUIDE.md"
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "app/__init__.py"
+    },
+    {
+      "sha256": "bc340ac2d8658f547b2a58012834d302482fea40a8773ba0363b4a1b2edf251c",
+      "path": "app/access.py"
+    },
+    {
+      "sha256": "cb47182afb51bd7fc866afd8dcc7e4bd4cb34300b891fc191c53c35da1d7bf37",
+      "path": "app/core.py"
+    },
+    {
+      "sha256": "7d605fe5bf5b14b9563481752dcd4c7aef7b67e2539b9d5171a75f7ee2c10346",
+      "path": "app/csv_import.py"
+    },
+    {
+      "sha256": "d1eda2150e58503114c6cf4ba36d5958aa7e2cfbb496fc0d8026b5c9da4beb77",
+      "path": "app/guard.py"
+    },
+    {
+      "sha256": "f805913f557d118795700d528a3ecefbea2769e02cfbb94a4d803181348eee0e",
+      "path": "app/main.py"
+    },
+    {
+      "sha256": "f7a4a09a26b83052edc956cf886195c0f4687b0661a166320f460f3e3ccad0d5",
+      "path": "app/static/access.js"
+    },
+    {
+      "sha256": "cff08bccb9fe435fab9501906139ed88ffe224c136352a8ac3d2e46e25fac6d4",
+      "path": "app/static/app.js"
+    },
+    {
+      "sha256": "baf4eaf1e37282bf4fe136e4c953dc9a414582769da80aee8121384e339287e6",
+      "path": "app/static/common.js"
+    },
+    {
+      "sha256": "c9f05a1f6bfd4b69ce3320cb7bd35ace664ae54e9abd0cd20562d3eaaa8e62ea",
+      "path": "app/static/guide.html"
+    },
+    {
+      "sha256": "d77f5a8145640fa60ce159ef69b50617e4f39f07f0c13f5a4f3444abb917d6b8",
+      "path": "app/static/index.html"
+    },
+    {
+      "sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+      "path": "app/static/styles.css"
+    },
+    {
+      "sha256": "12fe193035704ca340103731c0e2a572835baa061bb982ea65667d4806979993",
+      "path": "compose.yaml"
+    },
+    {
+      "sha256": "e3d7a27dcd6b869601c33afc9532b9ea02c14387b8ff735cbdc4144c75544ddb",
+      "path": "docs/OPERATIONS.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "docs/USER_GUIDE.md"
+    },
+    {
+      "sha256": "a51222587ce50c78de2ac737112f78c9aaba70ec5f3a3632d06785b434d72c42",
+      "path": "pyproject.toml"
+    },
+    {
+      "sha256": "3e9fb16204447836fb946dd77126b42b5c249acbee4a1dd44779ba21ab2af810",
+      "path": "requirements-dev.in"
+    },
+    {
+      "sha256": "9954b5b0e9f819a2e4140da8eb0ff6e51e39bf22f97f7a9967c122e1ea85b199",
+      "path": "requirements-dev.lock"
+    },
+    {
+      "sha256": "cc2d915f3530f2b16ab605d633b94e6c8784ee70f799daf639dd30deef2361de",
+      "path": "requirements-dev.txt"
+    },
+    {
+      "sha256": "da44951925ae485ff2ba743af929b11e7b0bac5b631084de18e1324b723d6f4d",
+      "path": "requirements.lock"
+    },
+    {
+      "sha256": "bd62df965af87f46d7903a4c86d2e43d7622bbcb6145a04466e29dc6c0e0c22b",
+      "path": "requirements.txt"
+    },
+    {
+      "sha256": "d8f870bb86183aab1edff1987308c53f2e912daf5760189a681bd81a52db2ee5",
+      "path": "tests/test_access.py"
+    },
+    {
+      "sha256": "0c3489dda78f899f6e12bd9eaa05359c7d284b1ec90cde3a302d56f74c783cb0",
+      "path": "tests/test_access_independent.py"
+    },
+    {
+      "sha256": "f89fb6d34fa49fdc199a7f5b92b8d55e7dd6ca737cbb490ef93c240857040fe8",
+      "path": "tests/test_app.py"
+    },
+    {
+      "sha256": "8a287c93145e62b7d504f8dbb016e25651715fcc2053219cb4e2db4d3078cac4",
+      "path": "tests/test_improvements_03.py"
+    },
+    {
+      "sha256": "943a6c1bfb9bb90eb6c774c54717a558451798e431f2d8bf5c6499741d85cb43",
+      "path": "tests/test_improvements_04.py"
+    },
+    {
+      "sha256": "0a12fe7f4a1ec9c92c126b59fe03cf5f68392f2e9185f59e22c313f41e531afa",
+      "path": "tests/test_independent04.py"
+    },
+    {
+      "sha256": "1b52f6571bea55c4dcd0c60356073972f2327f41bf35c426b54c6946365b9a45",
+      "path": "tests/test_independent_rebuild.py"
+    },
+    {
+      "sha256": "70d506d53cd4092ec1d5e4fc35367843d2635b37cc637f9360ce87d3d2a5ad30",
+      "path": "tests/test_independent_security_science_03.py"
+    },
+    {
+      "sha256": "709e55e68eccbe12bbbdbdc502274dc0f884d588c4f1428d4afd102686a63bc5",
+      "path": "tests/test_input_limits.py"
+    },
+    {
+      "sha256": "3f297d43a7fa507f0a68bb7c00cd60a999002c3882ed29298bbcedc922a0d7fb",
+      "path": "tests/test_rebuild.py"
+    },
+    {
+      "sha256": "119db8b68aec099c7780cde2e83c1240f3e1699b5430c9f353aec3e0a58acfe9",
+      "path": "tests/test_review.py"
+    },
+    {
+      "sha256": "e98aaa41246ab12402af4e8568ded7684acb4b44a8b17df07449237c7cc58d51",
+      "path": "tests/ui.test.mjs"
+    },
+    {
+      "sha256": "94ca23ae81eaef6f0a3eddcb5dbae0970c22bfe14e91c625d5d10a83edcd5b9f",
+      "path": "tools/scan_secrets.py"
+    },
+    {
+      "sha256": "ecedd0d5c9208a193cea960d43f084b49acd0a0dcd20e709cb2c755675769fd3",
+      "path": "tools/smoke.py"
+    },
+    {
+      "sha256": "26a68d9b7b2b26c741e9f00ede37131c7f25eef474b988bdb8e6b1218d2021d9",
+      "path": "tools/test_access.mjs"
+    },
+    {
+      "sha256": "a011463941834d70d767df7204201aff25a59172bd6955be548cd34c7ae93307",
+      "path": "tools/test_access_independent.mjs"
+    }
+  ],
+  "hash_schema": "Records use sha256 first and path second. Covers app/docs/tests/tools, current project/container/CI/readme configuration and requirements/locks; excludes caches and evidence.",
+  "limits": [
+    "Synthetic fixtures do not establish real-world external validity.",
+    "Greedy roadmap planning is not globally optimal and assumes evidence delivery.",
+    "Prediction metrics describe supplied labels; slices do not certify fairness or significance.",
+    "Reference conformance is adjacency/start/end allowlist checking, not full alignments or compliance.",
+    "No production code, Git or Docker state changed by this reviewer.",
+    "Actual HTTP and served-file checks do not include visual browser acceptance or independent image-build provenance."
+  ],
+  "resolved_issues": [
+    {
+      "severity": "blocking_validation",
+      "description": "A null first composite key suppresses validation of a later object/list key. API returns200 despite documented rejection of nonscalar keys.",
+      "test": "test_composite_null_does_not_hide_an_invalid_object_key_component"
+    }
+  ],
+  "runtime_status": "PASS: final rebuilt preview API probes and served index/guide/static bytes match current accepted source.",
+  "hashes_before_runtime": [
+    {
+      "sha256": "835304470dc0cd12354ec1cdc75665a9171ac4bef20478d3c623767c3e589832",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "sha256": "f1e22343125d7aa92707e4da7a8fef82ee1902309ca8998698a539dd7cf1b210",
+      "path": "Dockerfile"
+    },
+    {
+      "sha256": "8fce7f307e5f4c1d37b4fdf018f6b4ae46b5deca852b4ef24ddabbad9075182b",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "app/USER_GUIDE.md"
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "app/__init__.py"
+    },
+    {
+      "sha256": "bc340ac2d8658f547b2a58012834d302482fea40a8773ba0363b4a1b2edf251c",
+      "path": "app/access.py"
+    },
+    {
+      "sha256": "cb47182afb51bd7fc866afd8dcc7e4bd4cb34300b891fc191c53c35da1d7bf37",
+      "path": "app/core.py"
+    },
+    {
+      "sha256": "7d605fe5bf5b14b9563481752dcd4c7aef7b67e2539b9d5171a75f7ee2c10346",
+      "path": "app/csv_import.py"
+    },
+    {
+      "sha256": "d1eda2150e58503114c6cf4ba36d5958aa7e2cfbb496fc0d8026b5c9da4beb77",
+      "path": "app/guard.py"
+    },
+    {
+      "sha256": "64a82ca51a07ac049cb3f0c34d49e8415e40c3cd9d461273d18787ce9eabed01",
+      "path": "app/main.py"
+    },
+    {
+      "sha256": "f7a4a09a26b83052edc956cf886195c0f4687b0661a166320f460f3e3ccad0d5",
+      "path": "app/static/access.js"
+    },
+    {
+      "sha256": "286837cfbc8420a5eb244abcdc51bc658181581ac7d350e1cc2fa7c6d2b616d1",
+      "path": "app/static/app.js"
+    },
+    {
+      "sha256": "baf4eaf1e37282bf4fe136e4c953dc9a414582769da80aee8121384e339287e6",
+      "path": "app/static/common.js"
+    },
+    {
+      "sha256": "c9f05a1f6bfd4b69ce3320cb7bd35ace664ae54e9abd0cd20562d3eaaa8e62ea",
+      "path": "app/static/guide.html"
+    },
+    {
+      "sha256": "d77f5a8145640fa60ce159ef69b50617e4f39f07f0c13f5a4f3444abb917d6b8",
+      "path": "app/static/index.html"
+    },
+    {
+      "sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+      "path": "app/static/styles.css"
+    },
+    {
+      "sha256": "12fe193035704ca340103731c0e2a572835baa061bb982ea65667d4806979993",
+      "path": "compose.yaml"
+    },
+    {
+      "sha256": "e3d7a27dcd6b869601c33afc9532b9ea02c14387b8ff735cbdc4144c75544ddb",
+      "path": "docs/OPERATIONS.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "docs/USER_GUIDE.md"
+    },
+    {
+      "sha256": "a51222587ce50c78de2ac737112f78c9aaba70ec5f3a3632d06785b434d72c42",
+      "path": "pyproject.toml"
+    },
+    {
+      "sha256": "3e9fb16204447836fb946dd77126b42b5c249acbee4a1dd44779ba21ab2af810",
+      "path": "requirements-dev.in"
+    },
+    {
+      "sha256": "9954b5b0e9f819a2e4140da8eb0ff6e51e39bf22f97f7a9967c122e1ea85b199",
+      "path": "requirements-dev.lock"
+    },
+    {
+      "sha256": "cc2d915f3530f2b16ab605d633b94e6c8784ee70f799daf639dd30deef2361de",
+      "path": "requirements-dev.txt"
+    },
+    {
+      "sha256": "da44951925ae485ff2ba743af929b11e7b0bac5b631084de18e1324b723d6f4d",
+      "path": "requirements.lock"
+    },
+    {
+      "sha256": "bd62df965af87f46d7903a4c86d2e43d7622bbcb6145a04466e29dc6c0e0c22b",
+      "path": "requirements.txt"
+    },
+    {
+      "sha256": "d8f870bb86183aab1edff1987308c53f2e912daf5760189a681bd81a52db2ee5",
+      "path": "tests/test_access.py"
+    },
+    {
+      "sha256": "0c3489dda78f899f6e12bd9eaa05359c7d284b1ec90cde3a302d56f74c783cb0",
+      "path": "tests/test_access_independent.py"
+    },
+    {
+      "sha256": "f89fb6d34fa49fdc199a7f5b92b8d55e7dd6ca737cbb490ef93c240857040fe8",
+      "path": "tests/test_app.py"
+    },
+    {
+      "sha256": "8a287c93145e62b7d504f8dbb016e25651715fcc2053219cb4e2db4d3078cac4",
+      "path": "tests/test_improvements_03.py"
+    },
+    {
+      "sha256": "943a6c1bfb9bb90eb6c774c54717a558451798e431f2d8bf5c6499741d85cb43",
+      "path": "tests/test_improvements_04.py"
+    },
+    {
+      "sha256": "0a12fe7f4a1ec9c92c126b59fe03cf5f68392f2e9185f59e22c313f41e531afa",
+      "path": "tests/test_independent04.py"
+    },
+    {
+      "sha256": "1b52f6571bea55c4dcd0c60356073972f2327f41bf35c426b54c6946365b9a45",
+      "path": "tests/test_independent_rebuild.py"
+    },
+    {
+      "sha256": "70d506d53cd4092ec1d5e4fc35367843d2635b37cc637f9360ce87d3d2a5ad30",
+      "path": "tests/test_independent_security_science_03.py"
+    },
+    {
+      "sha256": "709e55e68eccbe12bbbdbdc502274dc0f884d588c4f1428d4afd102686a63bc5",
+      "path": "tests/test_input_limits.py"
+    },
+    {
+      "sha256": "3f297d43a7fa507f0a68bb7c00cd60a999002c3882ed29298bbcedc922a0d7fb",
+      "path": "tests/test_rebuild.py"
+    },
+    {
+      "sha256": "119db8b68aec099c7780cde2e83c1240f3e1699b5430c9f353aec3e0a58acfe9",
+      "path": "tests/test_review.py"
+    },
+    {
+      "sha256": "c76c3001ba57e7ad954eb67a8d47fb844ca718693e3787afda92b5874f73e362",
+      "path": "tests/ui.test.mjs"
+    },
+    {
+      "sha256": "94ca23ae81eaef6f0a3eddcb5dbae0970c22bfe14e91c625d5d10a83edcd5b9f",
+      "path": "tools/scan_secrets.py"
+    },
+    {
+      "sha256": "ecedd0d5c9208a193cea960d43f084b49acd0a0dcd20e709cb2c755675769fd3",
+      "path": "tools/smoke.py"
+    },
+    {
+      "sha256": "26a68d9b7b2b26c741e9f00ede37131c7f25eef474b988bdb8e6b1218d2021d9",
+      "path": "tools/test_access.mjs"
+    },
+    {
+      "sha256": "a011463941834d70d767df7204201aff25a59172bd6955be548cd34c7ae93307",
+      "path": "tools/test_access_independent.mjs"
+    }
+  ],
+  "runtime_hash_changes_since_full_suite": [
+    "app/main.py"
+  ],
+  "runtime_checked_at_utc": "2026-10-22T17:54:23.028060+00:00",
+  "image_provenance_status": "PASS: reviewed root Docker-exec complete app-tree proof and independently matched every recorded file hash to frozen current source.",
+  "full_suite_rechecked_after_import_only_change_at_utc": "2026-10-22T15:22:12.042815+00:00",
+  "source_stable_during_current_full_suite": true,
+  "full_suite_source_hashes_match_current_runtime_hashes": true,
+  "hashes_before_ui_repair": [
+    {
+      "sha256": "835304470dc0cd12354ec1cdc75665a9171ac4bef20478d3c623767c3e589832",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "sha256": "f1e22343125d7aa92707e4da7a8fef82ee1902309ca8998698a539dd7cf1b210",
+      "path": "Dockerfile"
+    },
+    {
+      "sha256": "8fce7f307e5f4c1d37b4fdf018f6b4ae46b5deca852b4ef24ddabbad9075182b",
+      "path": "README.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "app/USER_GUIDE.md"
+    },
+    {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "app/__init__.py"
+    },
+    {
+      "sha256": "bc340ac2d8658f547b2a58012834d302482fea40a8773ba0363b4a1b2edf251c",
+      "path": "app/access.py"
+    },
+    {
+      "sha256": "cb47182afb51bd7fc866afd8dcc7e4bd4cb34300b891fc191c53c35da1d7bf37",
+      "path": "app/core.py"
+    },
+    {
+      "sha256": "7d605fe5bf5b14b9563481752dcd4c7aef7b67e2539b9d5171a75f7ee2c10346",
+      "path": "app/csv_import.py"
+    },
+    {
+      "sha256": "d1eda2150e58503114c6cf4ba36d5958aa7e2cfbb496fc0d8026b5c9da4beb77",
+      "path": "app/guard.py"
+    },
+    {
+      "sha256": "f805913f557d118795700d528a3ecefbea2769e02cfbb94a4d803181348eee0e",
+      "path": "app/main.py"
+    },
+    {
+      "sha256": "f7a4a09a26b83052edc956cf886195c0f4687b0661a166320f460f3e3ccad0d5",
+      "path": "app/static/access.js"
+    },
+    {
+      "sha256": "286837cfbc8420a5eb244abcdc51bc658181581ac7d350e1cc2fa7c6d2b616d1",
+      "path": "app/static/app.js"
+    },
+    {
+      "sha256": "baf4eaf1e37282bf4fe136e4c953dc9a414582769da80aee8121384e339287e6",
+      "path": "app/static/common.js"
+    },
+    {
+      "sha256": "c9f05a1f6bfd4b69ce3320cb7bd35ace664ae54e9abd0cd20562d3eaaa8e62ea",
+      "path": "app/static/guide.html"
+    },
+    {
+      "sha256": "d77f5a8145640fa60ce159ef69b50617e4f39f07f0c13f5a4f3444abb917d6b8",
+      "path": "app/static/index.html"
+    },
+    {
+      "sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad",
+      "path": "app/static/styles.css"
+    },
+    {
+      "sha256": "12fe193035704ca340103731c0e2a572835baa061bb982ea65667d4806979993",
+      "path": "compose.yaml"
+    },
+    {
+      "sha256": "e3d7a27dcd6b869601c33afc9532b9ea02c14387b8ff735cbdc4144c75544ddb",
+      "path": "docs/OPERATIONS.md"
+    },
+    {
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e",
+      "path": "docs/USER_GUIDE.md"
+    },
+    {
+      "sha256": "a51222587ce50c78de2ac737112f78c9aaba70ec5f3a3632d06785b434d72c42",
+      "path": "pyproject.toml"
+    },
+    {
+      "sha256": "3e9fb16204447836fb946dd77126b42b5c249acbee4a1dd44779ba21ab2af810",
+      "path": "requirements-dev.in"
+    },
+    {
+      "sha256": "9954b5b0e9f819a2e4140da8eb0ff6e51e39bf22f97f7a9967c122e1ea85b199",
+      "path": "requirements-dev.lock"
+    },
+    {
+      "sha256": "cc2d915f3530f2b16ab605d633b94e6c8784ee70f799daf639dd30deef2361de",
+      "path": "requirements-dev.txt"
+    },
+    {
+      "sha256": "da44951925ae485ff2ba743af929b11e7b0bac5b631084de18e1324b723d6f4d",
+      "path": "requirements.lock"
+    },
+    {
+      "sha256": "bd62df965af87f46d7903a4c86d2e43d7622bbcb6145a04466e29dc6c0e0c22b",
+      "path": "requirements.txt"
+    },
+    {
+      "sha256": "d8f870bb86183aab1edff1987308c53f2e912daf5760189a681bd81a52db2ee5",
+      "path": "tests/test_access.py"
+    },
+    {
+      "sha256": "0c3489dda78f899f6e12bd9eaa05359c7d284b1ec90cde3a302d56f74c783cb0",
+      "path": "tests/test_access_independent.py"
+    },
+    {
+      "sha256": "f89fb6d34fa49fdc199a7f5b92b8d55e7dd6ca737cbb490ef93c240857040fe8",
+      "path": "tests/test_app.py"
+    },
+    {
+      "sha256": "8a287c93145e62b7d504f8dbb016e25651715fcc2053219cb4e2db4d3078cac4",
+      "path": "tests/test_improvements_03.py"
+    },
+    {
+      "sha256": "943a6c1bfb9bb90eb6c774c54717a558451798e431f2d8bf5c6499741d85cb43",
+      "path": "tests/test_improvements_04.py"
+    },
+    {
+      "sha256": "0a12fe7f4a1ec9c92c126b59fe03cf5f68392f2e9185f59e22c313f41e531afa",
+      "path": "tests/test_independent04.py"
+    },
+    {
+      "sha256": "1b52f6571bea55c4dcd0c60356073972f2327f41bf35c426b54c6946365b9a45",
+      "path": "tests/test_independent_rebuild.py"
+    },
+    {
+      "sha256": "70d506d53cd4092ec1d5e4fc35367843d2635b37cc637f9360ce87d3d2a5ad30",
+      "path": "tests/test_independent_security_science_03.py"
+    },
+    {
+      "sha256": "709e55e68eccbe12bbbdbdc502274dc0f884d588c4f1428d4afd102686a63bc5",
+      "path": "tests/test_input_limits.py"
+    },
+    {
+      "sha256": "3f297d43a7fa507f0a68bb7c00cd60a999002c3882ed29298bbcedc922a0d7fb",
+      "path": "tests/test_rebuild.py"
+    },
+    {
+      "sha256": "119db8b68aec099c7780cde2e83c1240f3e1699b5430c9f353aec3e0a58acfe9",
+      "path": "tests/test_review.py"
+    },
+    {
+      "sha256": "c76c3001ba57e7ad954eb67a8d47fb844ca718693e3787afda92b5874f73e362",
+      "path": "tests/ui.test.mjs"
+    },
+    {
+      "sha256": "94ca23ae81eaef6f0a3eddcb5dbae0970c22bfe14e91c625d5d10a83edcd5b9f",
+      "path": "tools/scan_secrets.py"
+    },
+    {
+      "sha256": "ecedd0d5c9208a193cea960d43f084b49acd0a0dcd20e709cb2c755675769fd3",
+      "path": "tools/smoke.py"
+    },
+    {
+      "sha256": "26a68d9b7b2b26c741e9f00ede37131c7f25eef474b988bdb8e6b1218d2021d9",
+      "path": "tools/test_access.mjs"
+    },
+    {
+      "sha256": "a011463941834d70d767df7204201aff25a59172bd6955be548cd34c7ae93307",
+      "path": "tools/test_access_independent.mjs"
+    }
+  ],
+  "release_review": {
+    "status": "PASS",
+    "recommendation": "Current source accepted by independent reviewer for parent release gates; this is not a publication claim.",
+    "checked_at_utc": "2026-10-22T17:54:43.872854+00:00",
+    "active_issues": [],
+    "limits": [
+      "Visual browser acceptance and release/publishing are owned by root.",
+      "Supplied root container proof was inspected and hashes independently checked; Docker exec was not independently repeated.",
+      "Known-value/adversarial tests do not establish external business/scientific validity."
+    ]
+  },
+  "final_root_native_health_source_changes": [
+    "Dockerfile"
+  ]
+}

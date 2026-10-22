@@ -1,0 +1,72 @@
+{
+  "application": "flowpilot",
+  "version": "0.4.0",
+  "status": "TESTED",
+  "author": "build_enterprise original application author",
+  "independent_review": false,
+  "checked_at_utc": "2026-10-22T15:24:42.786334+00:00",
+  "scope": "Author repairs requested by independent QA. Independent reviewer regressions were not modified. Includes integrated shared access tests; this is not Docker/hosted CI acceptance.",
+  "python_passed": 76,
+  "node_runner_passed": 24,
+  "bandit": "PASS0 configured findings",
+  "logs": [
+    "pytest-join-load-repair.txt",
+    "frontend-join-load-repair.txt",
+    "bandit-after-review.txt"
+  ],
+  "hashes": [
+    {
+      "path": "app/USER_GUIDE.md",
+      "sha256": "d71df1b5175f1b2524a0192c29dc8bdb7af8c1257b904989f72f5311a10e784e"
+    },
+    {
+      "path": "app/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app/access.py",
+      "sha256": "bc340ac2d8658f547b2a58012834d302482fea40a8773ba0363b4a1b2edf251c"
+    },
+    {
+      "path": "app/core.py",
+      "sha256": "cb47182afb51bd7fc866afd8dcc7e4bd4cb34300b891fc191c53c35da1d7bf37"
+    },
+    {
+      "path": "app/csv_import.py",
+      "sha256": "7d605fe5bf5b14b9563481752dcd4c7aef7b67e2539b9d5171a75f7ee2c10346"
+    },
+    {
+      "path": "app/guard.py",
+      "sha256": "d1eda2150e58503114c6cf4ba36d5958aa7e2cfbb496fc0d8026b5c9da4beb77"
+    },
+    {
+      "path": "app/main.py",
+      "sha256": "f805913f557d118795700d528a3ecefbea2769e02cfbb94a4d803181348eee0e"
+    },
+    {
+      "path": "app/static/access.js",
+      "sha256": "f7a4a09a26b83052edc956cf886195c0f4687b0661a166320f460f3e3ccad0d5"
+    },
+    {
+      "path": "app/static/app.js",
+      "sha256": "cff08bccb9fe435fab9501906139ed88ffe224c136352a8ac3d2e46e25fac6d4"
+    },
+    {
+      "path": "app/static/common.js",
+      "sha256": "baf4eaf1e37282bf4fe136e4c953dc9a414582769da80aee8121384e339287e6"
+    },
+    {
+      "path": "app/static/guide.html",
+      "sha256": "c9f05a1f6bfd4b69ce3320cb7bd35ace664ae54e9abd0cd20562d3eaaa8e62ea"
+    },
+    {
+      "path": "app/static/index.html",
+      "sha256": "d77f5a8145640fa60ce159ef69b50617e4f39f07f0c13f5a4f3444abb917d6b8"
+    },
+    {
+      "path": "app/static/styles.css",
+      "sha256": "14e48894070883d8545452d3e2b9bcefe3b8316e22048fc10b5b334e3cb137ad"
+    }
+  ],
+  "latest_repair": "Root browser found immediate Run could interrupt synthetic paired-source preview. Controls stay locked throughout both async previews, including newly created schema fields; Run refuses until load ends; finally restores states and keeps stale exports disabled. Delayed-preview/intermediate-Run and error restoration regressions pass."
+}

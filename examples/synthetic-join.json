@@ -1,0 +1,34 @@
+{
+  "csv_text": "customer,amount\nA,10\nB,20\nA,5",
+  "schema": {
+    "customer": "string",
+    "amount": "number"
+  },
+  "join": {
+    "csv_text": "customer,region\nA,North\nB,South",
+    "schema": {
+      "customer": "string",
+      "region": "string"
+    },
+    "left_on": [
+      "customer"
+    ],
+    "right_on": [
+      "customer"
+    ],
+    "how": "left",
+    "cardinality": "many_to_one"
+  },
+  "steps": [
+    {
+      "op": "aggregate",
+      "params": {
+        "field": "amount",
+        "operation": "sum",
+        "group_by": [
+          "right_region"
+        ]
+      }
+    }
+  ]
+}
